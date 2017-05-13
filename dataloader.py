@@ -11,7 +11,7 @@ NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "./data/train_32x32.mat"
 
 class DataLoader:
-  def __init__(self, data_path, batch_size):
+  def __init__(self, data_path, batch_size=50):
     data = sio.loadmat(data_path)
     self.images = data['X']
     self.labels = data['y']
