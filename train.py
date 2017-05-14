@@ -12,18 +12,32 @@ MAX_EPOCHS = 100
 LEARNING_RATE = 0.01
 
 # define model
-def conv2d(input_data, output_dim, width, height, scope):
+''' 
+  input:    [batch, in_height, in_width, in_channels]
+  filter:   [filter_height, filter_width, in_channels, out_channels]
+  strides:  [1, stride_h, stride_w, 1]
+  padding:  "VALID" - no padding
+            "SAME" - zero padding
+'''
+def conv2d(input_data, num_out_channels, width, height, strides, padding, scope):
   with tf.variable_scope(scope):
-    weights = tf.get_variable()
-    bias = tf.get_variable()
-  return tf.nn.conv2d(input_data, weights, strides=[], padding="VALID") + bias
+    weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
+    bias = tf.get_variable("b", [num_out_channels])
+    # TODO: activation function?
+  return tf.nn.bias_add(tf.nn.conv2d(input_data, weights, strides=strides, padding=padding), bias)
 
-def fc(input_data, output_dim, scope):
+# TODO: computation
+def fc(input_data, num_neurons, scope):
   shape = intput_data.get_shape().as_list()
+  dim = 1
+  for d in shape[1:]:
+    dim *= d
+  input_data = tf.reshape(input_data, [-1, dim])
   with tf.variable_scope(scope):
-    weights = tf.get_variable()
-    bias = tf.get_variable()
-  return tf.matmul() + bias
+    weights = tf.get_variable("w", [input_data.get_shape()[-1]])
+    bias = tf.get_variable("b", [num_neurons])
+  # TODO: activation function?
+  return tf.nn.bias_add(tf.matmul(input_data, weights), bias)
 
 def loss(input_data, scope):
   with tf.variable_scope(scope):
@@ -42,10 +56,14 @@ def update(loss, ):
   return 
 
 def SVHN():
+  # convolution section 1
   conv = conv2d()
   pool = tf.nn.max_pool()
+  # fully connected section 1
   logits = fc()
+  # loss section
   loss = loss(logits)
+  # training section
   update(loss, learning_rate)  
   
 
