@@ -7,11 +7,11 @@ class SVHN:
   def __init__(self):
 
 
+  def inference(self, inputs):
   '''
     perform inference
   '''
   # TODO: nomailize result using softmax
-  def inference(self, inputs):
     # conv1: convolution and rectified linear activation.
     conv1 = self.conv2d(inputs, 5, 5, 64, scope="conv1")
     # pool1: max pooling.
@@ -33,6 +33,7 @@ class SVHN:
     logits = self.fc(fc2, 10, scope="softmax_fc")
     return logits
     
+  def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME", activation=tf.nn.relu, weight_decay=True, scope="conv2d"):
   ''' 
     input:    [batch, in_height, in_width, in_channels]
     filter:   [filter_height, filter_width, in_channels, out_channels]
@@ -41,7 +42,6 @@ class SVHN:
   '''
   # TODO: add weight decay
   # TODO: specify initializer for weights and biases
-  def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME", activation=tf.nn.relu, weight_decay=True, scope="conv2d"):
     with tf.variable_scope(scope):
       weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
       bias = tf.get_variable("b", [num_out_channels])
@@ -50,10 +50,10 @@ class SVHN:
       else:
         return tf.nn.bias_add(tf.nn.conv2d(input_data, weights, strides=[1, stride, stride, 1], padding=padding), bias)
 
+  def fc(input_data, num_neurons, activation=tf.nn.relu, scope="fc"):
   ''' 
     input:    [batch, in_channels]
   '''
-  def fc(input_data, num_neurons, activation=tf.nn.relu, scope="fc"):
     shape = input_data.get_shape().as_list()
     with tf.variable_scope(scope):
       if len(shape) == 2:
@@ -69,10 +69,10 @@ class SVHN:
     else:
       return tf.nn.bias_add(tf.matmul(input_data, weights), bias)
 
+  def loss(logits, labels, scope="loss"):
   ''' 
     input:    [batch, classes]
   '''
-  def loss(logits, labels, scope="loss"):
     with tf.variable_scope(scope):
       # labels = tf.placeholder(tf.int64, shape=[batch_size], name="labels")
       cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels, logits=logits, name="cross_entropy_per_example")
