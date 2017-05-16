@@ -6,12 +6,12 @@ import math
 class SVHN:
   def __init__(self):
 
+
   '''
-    perform prediction
+    perform inference
   '''
   # TODO: nomailize result using softmax
-  def inference(self):
-    inputs = tf.placeholder(tf.int64, shape=[batch_size, 32, 32], name="input")
+  def inference(self, inputs):
     # conv1: convolution and rectified linear activation.
     conv1 = self.conv2d(inputs, 5, 5, 64, scope="conv1")
     # pool1: max pooling.
@@ -30,8 +30,8 @@ class SVHN:
     fc2 = self.fc(fc1, 192, scope="fc2")
     # softmax: linear transformation to produce logits.
     # softmax is NOT performed here for efficiency
-    softmax_fc = self.fc(fc2, 10, scope="softmax_fc")
-    return softmax_fc
+    logits = self.fc(fc2, 10, scope="softmax_fc")
+    return logits
     
   ''' 
     input:    [batch, in_height, in_width, in_channels]
@@ -70,24 +70,28 @@ class SVHN:
       return tf.nn.bias_add(tf.matmul(input_data, weights), bias)
 
   ''' 
-    input:    [batch, in_channels]
+    input:    [batch, classes]
   '''
-  def loss(logits, batch_size, scope="loss"):
+  def loss(logits, labels, scope="loss"):
     with tf.variable_scope(scope):
-      labels = tf.placeholder(tf.int64, shape=[batch_size], name="labels")
-      loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=labels, logits=logits), name="loss")
+      # labels = tf.placeholder(tf.int64, shape=[batch_size], name="labels")
+      cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels, logits=logits, name="cross_entropy_per_example")
+      cross_entropy_mean = tf.reduce_mean(cross_entropy, name="cross_entropy_mean")
+      loss = cross_entropy_mean
+      # TODO: add weight decay loss
+      # tf.add_to_collection("losses", cross_entropy_mean)
+      # loss = tf.add_n(tf.get_collection("losses", name="total_loss")
     return loss
 
-  def optimize(loss, learning_rate=1.0, scope="optimize"):
+  def optimize(loss, global_step, learning_rate=1.0, scope="optimize"):
     # for continuing training
-    global_step = tf.Variable(0, name='global_step', trainable=False)
     with tf.variable_scope(scope):
-      learning_rate = tf.get_variable(learning_rate, trainable=False, name='learning_rate')
       tvars = tf.trainable_variables()
       grads, global_norm = tf.clip_by_global_norm(tf.gradients(loss, tvars), max_grad_norm)
       # TODO: other optimizers?
+      # learning_rate = tf.get_variable(learning_rate, trainable=False, name='learning_rate')
       # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
       optimizer = tf.train.AdamOptimizer()
       train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
-    return 
+    return train_op
 

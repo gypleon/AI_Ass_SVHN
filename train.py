@@ -21,13 +21,23 @@ def main(_):
   valid_set_loader = DataLoader(VALID_SET_PATH)
   
   with tf.Graph().as_default(), tf.Session() as session:
+    images = tf.placeholder(tf.int64, shape=[batch_size, 32, 32], name="inputs")
+    labels = tf.placeholder(tf.int64, shape=[batch_size], name="labels")
+
     tf.set_random_seed(seed)
     initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
+    global_step = tf.contrib.framework.get_or_create_global_step()
+
     with tf.variable_scope("SVHN", initializer=initializer):
-      train_model = model.SVHN()
+      logits = SVHN.inference(images)
+      loss = SVHN.loss(logits, labels)
+      op = SVHN.optimize(loss, global_step)
+
     saver = tf.train.Saver()
+
     with tf.variable_scope("SVHN", reuse=True):
-      valid_model = model.SVHN()
+      logits = SVHN.inference(images)
+      loss = SVHN.loss(logits, labels)
     
     tf.global_vairables_initializer().run()
     
