@@ -28,8 +28,10 @@ class DataLoader:
     self.images = data['X']
     self.labels = data['y']
     self.images = np.transpose(self.images, (3, 0, 1, 2))
-
-    self.example_queue = tf.train.input_producer(examples
+    
+    # input queue
+    examples = zip(self.labels, self.images)
+    self.example_queue = tf.train.input_producer(examples)
     '''
     num_samples = self.labels.shape[0]
     num_batches = num_samples // batch_size
@@ -41,19 +43,22 @@ class DataLoader:
     self.label_batches = np.split(self.labels, split_conf, axis=0)
     '''
 
-    # convert into tensors
-    image_queue
-
   def preprocess(self, image):
     distorted_image = tf.image.random_flip_left_right(image)
     distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
     distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
     float_image = tf.image.per_image_standardization(distorted_image)
-    float_image.set_shape([32, 32, 3])
+    return float_image
 
   def load_batch(self):
+    example = self.example_queue.dequeue()
+    image = tf.stack(example[1])
+    label = tf.stack(example[0])
+    image = self.preprocess(image)
+    image.set_shape([32, 32, 3])
+    label.seg_shape([1])
     image_batch, label_batch = tf.train.shuffle_batch(
-      [self.image, self.label],
+      [image, label],
       batch_size=self.batch_size,
       num_threads=4,
       capacity=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL + 3 * self.batch_size,
