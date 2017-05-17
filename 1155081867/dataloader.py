@@ -16,8 +16,8 @@ import tensorflow as tf
 # configuration
 BATCH_SIZE = 100
 NUM_SUBPLOT_COLS = 10
-DATASET_PATH = "./data/train_32x32.mat"
-GEN_TEST_PATH = "./data/test_images.mat"
+DATASET_PATH = "../data/train_32x32.mat"
+GEN_TEST_PATH = "../data/test_images.mat"
 
 NUM_CLASSES = 10
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000

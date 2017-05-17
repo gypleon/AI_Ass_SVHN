@@ -1,6 +1,20 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import tensorflow as tf
 import numpy as np
 import math
+
+import dataloader
+
+NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = dataloader.NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN
+NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = dataloader.NUM_EXAMPLES_PER_EPOCH_FOR_EVAL
+
+MOVING_AVERAGE_DECAY = 0.9999     # The decay to use for the moving average.
+NUM_EPOCHS_PER_DECAY = 350.0      # Epochs after which learning rate decays.
+LEARNING_RATE_DECAY_FACTOR = 0.1  # Learning rate decay factor.
+INITIAL_LEARNING_RATE = 0.1       # Initial learning rate.
 
 # define model
 def inference(inputs):
@@ -8,7 +22,6 @@ def inference(inputs):
     perform inference
   '''
   inputs = tf.stack(inputs, name="input_images_tensor")
-  # TODO: nomailize result using softmax
   # conv1: convolution and rectified linear activation.
   conv1 = conv2d(inputs, 5, 5, 64, scope="conv1")
   # pool1: max pooling.
@@ -37,7 +50,6 @@ def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME"
     padding:  "VALID" - no padding
               "SAME" - zero padding
   '''
-  # TODO: specify initializer for weights and biases
   with tf.variable_scope(scope):
     weights = get_decay_weight("w", shape=[height, width, input_data.get_shape()[-1], num_out_channels], stddev=5e-2, wd=0.0)
     # weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
@@ -90,10 +102,10 @@ def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="opt
     # TODO: other optimizers?
     # tvars = tf.trainable_variables()
     # grads, global_norm = tf.clip_by_global_norm(tf.gradients(loss, tvars), max_grad_norm)
-    optimizer = tf.train.AdamOptimizer(learning_rate)
-    train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
-    # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-    # grads = optimizer.compute_gradients(loss)
+    # optimizer = tf.train.AdamOptimizer(learning_rate)
+    # train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+    grads = optimizer.compute_gradients(loss)
     train_op = optimizer.apply_gradients(grads, global_step=global_step)
   return train_op
 

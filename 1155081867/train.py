@@ -19,8 +19,8 @@ tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
 tf.app.flags.DEFINE_integer("valid_batch_size", 1000, "validation batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_integer("eval_frequency", 100, "log frequency")
-tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
-tf.app.flags.DEFINE_string ("valid_set_path", "./data/test_32x32.mat", "path of the test set")
+tf.app.flags.DEFINE_string ("train_set_path", "../data/train_32x32.mat", "path of the train set")
+tf.app.flags.DEFINE_string ("valid_set_path", "../data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
 tf.app.flags.DEFINE_float  ("learning_rate", 0.01, "initial learning rate")
@@ -59,6 +59,7 @@ def main(_):
       top_k_op = tf.nn.in_top_k(logits, valid_labels, 1)
     
     scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
+    saver = tf.train.Saver(tf.trainable_variables())
 
     class _LoggerHook(tf.train.SessionRunHook):
       """Logs loss and runtime."""
@@ -111,7 +112,8 @@ def main(_):
         checkpoint_dir=FLAGS.log_dir,
         hooks=[tf.train.StopAtStepHook(last_step=FLAGS.max_steps),
                tf.train.NanTensorHook(loss),
-               _LoggerHook()],
+               _LoggerHook(),
+               tf.train.CheckpointSaverHook(checkpoint_dir=FLAGS.log_dir, saver=saver, save_steps=100)],
         config=tf.ConfigProto(
             log_device_placement=FLAGS.log_device_placement)) as mon_sess:
       while not mon_sess.should_stop():
