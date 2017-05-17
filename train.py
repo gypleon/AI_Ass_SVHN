@@ -19,7 +19,7 @@ tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
-tf.app.flags.DEFINE_integer("max_epochs", 100, "max number of epochs")
+tf.app.flags.DEFINE_integer("max_epochs", 10, "max number of epochs")
 tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
 
@@ -41,7 +41,8 @@ def main(_):
     initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
     global_step = tf.contrib.framework.get_or_create_global_step()
 
-    with tf.variable_scope("SVHN", initializer=initializer):
+    with tf.variable_scope("svhn", initializer=initializer):
+      print("TEST 1")
       logits = model.inference(images)
       loss = model.loss(logits, labels)
       op = model.optimize(loss, global_step)
@@ -50,14 +51,17 @@ def main(_):
       """Logs loss and runtime."""
 
       def begin(self):
+        print("TEST 2")
         self._step = -1
         self._start_time = time.time()
 
       def before_run(self, run_context):
+        print("TEST 3")
         self._step += 1
         return tf.train.SessionRunArgs(loss)  # Asks for loss value.
 
       def after_run(self, run_context, run_values):
+        print("TEST 4")
         if self._step % FLAGS.log_frequency == 0:
           current_time = time.time()
           duration = current_time - self._start_time
@@ -79,9 +83,13 @@ def main(_):
                _LoggerHook()],
         config=tf.ConfigProto(
             log_device_placement=FLAGS.log_device_placement)) as mon_sess:
+      print("TEST 5")
       dataloader.load(mon_sess)
+      print("TEST 6")
       while not mon_sess.should_stop():
+        print("TEST 7")
         mon_sess.run(op)
+      print("TEST 8")
       dataloader.close(mon_sess)
 
     '''

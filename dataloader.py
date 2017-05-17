@@ -24,6 +24,7 @@ NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
 
 class DataLoader:
   def __init__(self, data_path, batch_size=50):
+    print("loading raw file:", data_path)
     data = sio.loadmat(data_path)
     self.batch_size = batch_size
     self.images = data['X']
@@ -31,6 +32,7 @@ class DataLoader:
     self.images = np.transpose(self.images, (3, 0, 1, 2))
 
     # fill queue
+    print("filling input queue")
     self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
     self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1], name="input_labels")
     self.example_queue = tf.FIFOQueue(
@@ -97,6 +99,7 @@ class DataLoader:
       capacity=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL + 3 * self.batch_size,
       min_after_dequeue=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL) 
     tf.summary.image('images', image_batch)
+    print("loading batch of samples:", self.batch_size) 
     return image_batch, tf.reshape(label_batch, [self.batch_size])
 
   def load(self, session):
