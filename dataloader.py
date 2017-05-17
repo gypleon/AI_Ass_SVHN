@@ -14,7 +14,7 @@ import tensorflow as tf
 
 
 # configuration
-BATCH_SIZE = 1000
+BATCH_SIZE = 100
 NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "./data/train_32x32.mat"
 
@@ -61,7 +61,7 @@ class DataLoader:
     try:
       while not self.coord.should_stop():
         end = start + self.batch_size
-        print("loading [%d:%d] into input queue..." % (start, end))
+        # print("loading [%d:%d] into input queue..." % (start, end))
         image_batch = self.images[start:end]
         label_batch = self.labels[start:end]
         start = end
@@ -74,7 +74,7 @@ class DataLoader:
             self.queue_image : image_batch,
             self.queue_label : label_batch})
     except Exception as e:
-      coord.request_stop(e)
+      self.coord.request_stop(e)
     print("dataset loaded successfully.")
 
   def preprocess(self):
@@ -114,10 +114,12 @@ class DataLoader:
     print("dataloader closed successfully.")
 
 if __name__ == "__main__":
+  '''
   fig = plt.figure()
   num_plot_cols = NUM_SUBPLOT_COLS
   num_plot_rows = int(math.ceil(BATCH_SIZE/num_plot_cols))
   labels = []
+  ''' 
 
   with tf.Graph().as_default():
     dataloader = DataLoader(DATASET_PATH, BATCH_SIZE)
@@ -125,16 +127,19 @@ if __name__ == "__main__":
     run_options = tf.RunOptions(timeout_in_ms=4000000)
     with tf.Session() as session:
       dataloader.load(session)
-      for epoch in range(10):
+      for epoch in range(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN // BATCH_SIZE):
         images, labels = session.run([image_batch, label_batch], options=run_options)
-        print(images.shape, labels.shape)
+        # print(images.shape, labels.shape)
+        # print(labels)
+        ''' 
         for batch_i in range(BATCH_SIZE):
           sub_plot = fig.add_subplot(num_plot_rows, num_plot_cols, batch_i+1)
           plt.imshow(images[batch_i])
-        labels.append([label[0] for label in label_batch])
+        '''
       dataloader.close(session)
-  print(labels)
-  plt.show()
+  # plt.show()
+
+  # deprecated
   '''
   batch_count = 0
   fig = plt.figure()
