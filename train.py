@@ -16,13 +16,16 @@ FLAGS = tf.app.flags.FLAGS
 
 # configuration
 tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
+tf.app.flags.DEFINE_integer("valid_batch_size", 1000, "validation batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
+tf.app.flags.DEFINE_integer("eval_frequency", 100, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("valid_set_path", "./data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
 tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
+tf.app.flags.DEFINE_integer('num_examples', 10000, "")
 
 
 # train model
@@ -35,7 +38,7 @@ def main(_):
 
   with tf.Graph().as_default():
     train_loader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
-    valid_loader = DataLoader(FLAGS.valid_set_path, FLAGS.batch_size)
+    valid_loader = DataLoader(FLAGS.valid_set_path, FLAGS.valid_batch_size, 1000)
     train_images, train_labels = train_loader.load_batch()
     valid_images, valid_labels = valid_loader.load_batch()
 
@@ -53,7 +56,7 @@ def main(_):
 
     with tf.variable_scope("svhn", reuse=True):
       logits = model.inference(valid_images)
-      precision = model.evaluate(logits, valid_labels)
+      top_k_op = tf.nn.in_top_k(logits, valid_labels, 1)
     
     scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
 
@@ -61,6 +64,7 @@ def main(_):
       """Logs loss and runtime."""
       def after_create_session(self, session, coord):
         train_loader.load(session)
+        valid_loader.load(session)
         print("TEST after_create_session")
 
       def begin(self):
@@ -71,11 +75,12 @@ def main(_):
       def end(self, session):
         print("TEST end")
         train_loader.close(session)
+        valid_loader.close(session)
 
       def before_run(self, run_context):
         # print("TEST before_run")
         self._step += 1
-        return tf.train.SessionRunArgs(loss), tf.train.SessionRunArgs(precision)
+        return tf.train.SessionRunArgs(loss)
 
       def after_run(self, run_context, run_values):
         # print("TEST after_run")
@@ -88,15 +93,23 @@ def main(_):
           examples_per_sec = FLAGS.log_frequency * FLAGS.batch_size / duration
           sec_per_batch = float(duration / FLAGS.log_frequency)
 
-          format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
-                        'sec/batch), precision = %.2f\%')
-          print(format_str % (datetime.now(), self._step, loss_value,
-                               examples_per_sec, sec_per_batch, precision))
+          if self._step % FLAGS.eval_frequency == 0:
+            precision = model.evaluate(run_context.session, top_k_op, FLAGS.num_examples, FLAGS.batch_size)
+            format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
+                          'sec/batch), precision = %.2f%%')
+            print(format_str % (datetime.now(), self._step, loss_value,
+                                 examples_per_sec, sec_per_batch, precision))
+          else:
+            format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
+                          'sec/batch)')
+            print(format_str % (datetime.now(), self._step, loss_value,
+                                 examples_per_sec, sec_per_batch))
+
 
     with tf.train.MonitoredTrainingSession(
         scaffold=scaffold,
         checkpoint_dir=FLAGS.log_dir,
-        hooks=[tf.train.StopAtStepHook(last_step=FLAGS.max_epochs),
+        hooks=[tf.train.StopAtStepHook(last_step=FLAGS.max_steps),
                tf.train.NanTensorHook(loss),
                _LoggerHook()],
         config=tf.ConfigProto(

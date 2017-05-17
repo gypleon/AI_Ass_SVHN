@@ -23,7 +23,7 @@ NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000
 NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
 
 class DataLoader:
-  def __init__(self, data_path, batch_size=50):
+  def __init__(self, data_path, batch_size=50, dataset_size=None):
     print("loading raw file:", data_path)
     data = sio.loadmat(data_path)
     self.batch_size = batch_size
@@ -31,6 +31,9 @@ class DataLoader:
     self.labels = data['y']
     self.images = np.transpose(self.images, (3, 0, 1, 2))
     self.labels[self.labels==10] = 0
+    if dataset_size != None:
+      self.images = self.images[:dataset_size]
+      self.labels = self.labels[:dataset_size]
 
     # fill queue
     print("filling input queue")
