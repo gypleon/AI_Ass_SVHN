@@ -14,7 +14,7 @@ import tensorflow as tf
 
 
 # configuration
-BATCH_SIZE = 50
+BATCH_SIZE = 1000
 NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "./data/train_32x32.mat"
 
@@ -39,7 +39,11 @@ class DataLoader:
       shapes=[[32, 32, 3], [1]])
     # self.example_queue = tf.train.input_producer(examples)
     self.enqueue = self.example_queue.enqueue_many([self.queue_image, self.queue_label])
-    self.dequeue = self.example_queue.dequeue()
+
+    self.enqueue_thread = None
+    self.coord = None
+    self.coord = tf.train.Coordinator()
+    self.threads = None
     '''
     num_samples = self.labels.shape[0]
     num_batches = num_samples // batch_size
@@ -54,39 +58,37 @@ class DataLoader:
   def load_dataset(self, session):
     start = 0
     dataset_size = len(self.labels)
-    while True:
-      end = start + self.batch_size
-      print("loading [%d:%d] into input queue ..." % (start, end))
-      if end <= dataset_size:
+    try:
+      while not self.coord.should_stop():
+        end = start + self.batch_size
+        print("loading [%d:%d] into input queue..." % (start, end))
         image_batch = self.images[start:end]
         label_batch = self.labels[start:end]
         start = end
-      else:
-        # rest = end - dataset_size
-        image_batch = self.images[start, dataset_size]
-        label_batch = self.labels[start, dataset_size]
-      session.run(
-        self.enqueue, 
-        feed_dict={
-          self.queue_image : image_batch,
-          self.queue_label : label_batch})
-      if end >= dataset_size:
-        break
+        if end >= dataset_size:
+          self.coord.request_stop()
+          break
+        session.run(
+          self.enqueue, 
+          feed_dict={
+            self.queue_image : image_batch,
+            self.queue_label : label_batch})
+    except Exception as e:
+      coord.request_stop(e)
     print("dataset loaded successfully.")
 
-  def preprocess(self, example_queue):
+  def preprocess(self):
+    image, label = self.example_queue.dequeue()
     distorted_image = tf.image.random_flip_left_right(image)
     distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
     distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
     float_image = tf.image.per_image_standardization(distorted_image)
-    return float_image
+    return float_image, label
 
   def load_batch(self):
-    example = self.preprocess(self.dequeue)
-    image = tf.stack(example[1])
-    label = tf.stack(example[0])
+    image, label= self.preprocess()
     image.set_shape([32, 32, 3])
-    label.seg_shape([1])
+    label.set_shape([1])
     image_batch, label_batch = tf.train.shuffle_batch(
       [image, label],
       batch_size=self.batch_size,
@@ -96,24 +98,43 @@ class DataLoader:
     tf.summary.image('images', image_batch)
     return image_batch, tf.reshape(label_batch, [self.batch_size])
 
-  def close_queue(self, session):
+  def load(self, session):
+    self.enqueue_thread = threading.Thread(target=self.load_dataset, args=[session])
+    self.enqueue_thread.isDaemon()
+    self.enqueue_thread.start()
+    self.threads = tf.train.start_queue_runners(coord=self.coord, sess=session)
+    
+  def close(self, session):
     session.run(self.example_queue.close(cancel_pending_enqueues=True))
-
+    self.coord.request_stop()
+    try:
+      self.coord.join(self.threads)
+    except Exception as e:
+      print("thread error: ", e)
+    print("dataloader closed successfully.")
 
 if __name__ == "__main__":
+  fig = plt.figure()
+  num_plot_cols = NUM_SUBPLOT_COLS
+  num_plot_rows = int(math.ceil(BATCH_SIZE/num_plot_cols))
+  labels = []
 
   with tf.Graph().as_default():
     dataloader = DataLoader(DATASET_PATH, BATCH_SIZE)
+    image_batch, label_batch = dataloader.load_batch()
+    run_options = tf.RunOptions(timeout_in_ms=4000000)
     with tf.Session() as session:
-      enqueue_thread = threading.Thread(target=dataloader.load_dataset, args=[session])
-      enqueue_thread.isDaemon()
-      enqueue_thread.start()
-      coord = tf.train.Coordinator()
-      threads = tf.train.start_queue_runners(coord=coord, sess=session)
-      image_batch, label_batch = dataloader.load_batch()
-      dataloader.close_queue(session)
-      coord.request_stop()
-      coord.join(threads)
+      dataloader.load(session)
+      for epoch in range(10):
+        images, labels = session.run([image_batch, label_batch], options=run_options)
+        print(images.shape, labels.shape)
+        for batch_i in range(BATCH_SIZE):
+          sub_plot = fig.add_subplot(num_plot_rows, num_plot_cols, batch_i+1)
+          plt.imshow(images[batch_i])
+        labels.append([label[0] for label in label_batch])
+      dataloader.close(session)
+  print(labels)
+  plt.show()
   '''
   batch_count = 0
   fig = plt.figure()
