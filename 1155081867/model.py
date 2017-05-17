@@ -95,17 +95,26 @@ def loss(logits, labels, scope="loss"):
     loss = tf.add_n(tf.get_collection("losses"), name="total_loss")
   return loss
 
-def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="optimize"):
+def optimize(loss, global_step, init_learning_rate=0.1, batch_size=128, max_grad_norm=5.0, scope="optimize"):
+  num_batches_per_epoch = NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN / batch_size
+  decay_steps = int(num_batches_per_epoch * NUM_EPOCHS_PER_DECAY)
   # for continuing training
   with tf.variable_scope(scope):
-    learning_rate = tf.Variable(learning_rate, trainable=False, name='learning_rate')
+    # learning_rate = tf.Variable(learning_rate, trainable=False, name='learning_rate')
+    learning_rate = tf.train.exponential_decay(init_learning_rate,
+                                    global_step,
+                                    decay_steps,
+                                    LEARNING_RATE_DECAY_FACTOR,
+                                    staircase=True)
     # TODO: other optimizers?
     # tvars = tf.trainable_variables()
     # grads, global_norm = tf.clip_by_global_norm(tf.gradients(loss, tvars), max_grad_norm)
     # optimizer = tf.train.AdamOptimizer(learning_rate)
     # train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-    grads = optimizer.compute_gradients(loss)
+    loss_averages_op = add_loss_summaries(loss)
+    with tf.control_dependencies([loss_averages_op]):
+      optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+      grads = optimizer.compute_gradients(loss)
     train_op = optimizer.apply_gradients(grads, global_step=global_step)
   return train_op
 
@@ -130,3 +139,8 @@ def get_decay_weight(name, shape, stddev, wd):
     tf.add_to_collection('losses', weight_decay)
   return var
 
+def add_loss_summaries(loss):
+  loss_averages = tf.train.ExponentialMovingAverage(0.9, name='avg')
+  losses = tf.get_collection('losses')
+  loss_averages_op = loss_averages.apply(losses + [loss])
+  return loss_averages_op

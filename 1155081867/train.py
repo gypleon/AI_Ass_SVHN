@@ -15,13 +15,13 @@ import model
 FLAGS = tf.app.flags.FLAGS
 
 # configuration
-tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
+tf.app.flags.DEFINE_integer("batch_size", 128, "batch size")
 tf.app.flags.DEFINE_integer("valid_batch_size", 1000, "validation batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_integer("eval_frequency", 100, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "../data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("valid_set_path", "../data/test_32x32.mat", "path of the test set")
-tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
+tf.app.flags.DEFINE_string ("log_dir", "./trained_model", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
 tf.app.flags.DEFINE_float  ("learning_rate", 0.01, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
@@ -52,7 +52,7 @@ def main(_):
       # train_labels = tf.Print(train_labels, [train_labels], message="TEST labels:", summarize=FLAGS.batch_size)
       loss = model.loss(logits, train_labels)
       # loss = tf.Print(loss, [loss], message="TEST loss:", summarize=FLAGS.batch_size)
-      train_op = model.optimize(loss, global_step, FLAGS.learning_rate)
+      train_op = model.optimize(loss, global_step, FLAGS.learning_rate, FLAGS.batch_size)
 
     with tf.variable_scope("svhn", reuse=True):
       logits = model.inference(valid_images)

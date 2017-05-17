@@ -20,8 +20,8 @@ DATASET_PATH = "../data/train_32x32.mat"
 GEN_TEST_PATH = "../data/test_images.mat"
 
 NUM_CLASSES = 10
-NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000
-NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
+NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 73257
+NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 1000
 
 class DataLoader:
   def __init__(self, data_path, batch_size=50, num_valid_samples=None):
@@ -40,7 +40,7 @@ class DataLoader:
     self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
     self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1], name="input_labels")
     self.example_queue = tf.FIFOQueue(
-      capacity=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL + 3 * self.batch_size,
+      capacity=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4) + 3 * self.batch_size,
       dtypes=[tf.int64, tf.int64],
       shapes=[[32, 32, 3], [1]])
     # self.example_queue = tf.train.input_producer(examples)
@@ -88,9 +88,12 @@ class DataLoader:
 
   def preprocess(self):
     image, label = self.example_queue.dequeue()
-    distorted_image = tf.image.random_flip_left_right(image)
-    distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
-    distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
+    if self.num_valid_samples == None:
+      distorted_image = tf.image.random_flip_left_right(image)
+      distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
+      distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
+    else:
+      distorted_image = image
     float_image = tf.image.per_image_standardization(distorted_image)
     return float_image, label
 
@@ -98,12 +101,20 @@ class DataLoader:
     image, label= self.preprocess()
     image.set_shape([32, 32, 3])
     label.set_shape([1])
-    image_batch, label_batch = tf.train.shuffle_batch(
-      [image, label],
-      batch_size=self.batch_size,
-      num_threads=4,
-      capacity=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL + 3 * self.batch_size,
-      min_after_dequeue=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL) 
+    if self.num_valid_samples != None:
+      image_batch, label_batch = tf.train.shuffle_batch(
+        [image, label],
+        batch_size=self.batch_size,
+        num_threads=4,
+        capacity=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4) + 3 * self.batch_size,
+        min_after_dequeue=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4))
+    else:
+      image_batch, label_batch = tf.train.batch(
+        [image, label],
+        batch_size=self.batch_size,
+        num_threads=4,
+        capacity=int(NUM_EXAMPLES_PER_EPOCH_FOR_EVAL * 0.4) + 3 * self.batch_size)
+
     tf.summary.image('images', image_batch)
     print("loading batch of samples:", self.batch_size) 
     return image_batch, tf.reshape(label_batch, [self.batch_size])
