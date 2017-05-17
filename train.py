@@ -25,7 +25,7 @@ tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/lo
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
 tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
-tf.app.flags.DEFINE_integer('num_examples', 10000, "")
+tf.app.flags.DEFINE_integer('num_examples', 1000, "")
 
 
 # train model

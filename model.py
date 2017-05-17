@@ -89,19 +89,15 @@ def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="opt
     # TODO: other optimizers?
     # learning_rate = tf.get_variable(learning_rate, trainable=False, name='learning_rate')
     # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-    optimizer = tf.train.AdamOptimizer()
+    optimizer = tf.train.AdamOptimizer(learning_rate)
     train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
   return train_op
 
 def evaluate(session, top_k_op, num_examples, batch_size):
-  num_iter = int(math.ceil(num_examples / batch_size))
-  true_count = 0  # Counts the number of correct predictions.
-  total_sample_count = num_iter * batch_size
-  step = 0
-  while step < num_iter:
-    predictions = session.run([top_k_op])
-    true_count += np.sum(predictions)
-    step += 1
+  predictions = session.run([top_k_op])
+  true_count = np.sum(predictions)
   # Compute precision @ 1.
-  precision = true_count / total_sample_count
-  return precision
+  precision = float(true_count) / num_examples
+  if precision >= .8:
+    print(predictions)
+  return precision * 100
