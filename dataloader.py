@@ -59,27 +59,32 @@ class DataLoader:
     self.label_batches = np.split(self.labels, split_conf, axis=0)
     '''
 
-  def load_dataset(self, session):
+  def data_stream(self, session):
     start = 0
     dataset_size = len(self.labels)
     try:
       while not self.coord.should_stop():
+      # while True:
         end = start + self.batch_size
         # print("loading [%d:%d] into input queue..." % (start, end))
-        image_batch = self.images[start:end]
-        label_batch = self.labels[start:end]
-        start = end
-        if end >= dataset_size:
-          self.coord.request_stop()
-          break
+        if end <= dataset_size:
+          image_batch = self.images[start:end]
+          label_batch = self.labels[start:end]
+          start = end
+        else:
+          remaining = end - dataset_size
+          image_batch = np.concatenate(self.images[start:dataset_size], self.images[0:remaining])
+          label_batch = np.concatenate(self.labels[start:dataset_size], self.labels[0:remaining])
+          start = remaining
         session.run(
           self.enqueue, 
           feed_dict={
             self.queue_image : image_batch,
             self.queue_label : label_batch})
     except Exception as e:
+      print("DATALOADER ERROR:", e)
       self.coord.request_stop(e)
-    print("dataset loaded successfully.")
+    print("data stream closed.")
 
   def preprocess(self):
     image, label = self.example_queue.dequeue()
@@ -104,7 +109,7 @@ class DataLoader:
     return image_batch, tf.reshape(label_batch, [self.batch_size])
 
   def load(self, session):
-    self.enqueue_thread = threading.Thread(target=self.load_dataset, args=[session])
+    self.enqueue_thread = threading.Thread(target=self.data_stream, args=[session])
     self.enqueue_thread.isDaemon()
     self.enqueue_thread.start()
     self.threads = tf.train.start_queue_runners(coord=self.coord, sess=session)
