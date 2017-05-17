@@ -73,8 +73,8 @@ class DataLoader:
           start = end
         else:
           remaining = end - dataset_size
-          image_batch = np.concatenate(self.images[start:dataset_size], self.images[0:remaining])
-          label_batch = np.concatenate(self.labels[start:dataset_size], self.labels[0:remaining])
+          image_batch = np.concatenate((self.images[start:dataset_size], self.images[0:remaining]))
+          label_batch = np.concatenate((self.labels[start:dataset_size], self.labels[0:remaining]))
           start = remaining
         session.run(
           self.enqueue, 

@@ -93,3 +93,5 @@ def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="opt
     train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
   return train_op
 
+def evaluate(logits, labels):
+  top_k_op = tf.nn.in_top_k(logits, valid_labels, 1)

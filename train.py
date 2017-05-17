@@ -18,8 +18,9 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
+tf.app.flags.DEFINE_string ("valid_set_path", "./data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
-tf.app.flags.DEFINE_integer("max_epochs", 100000, "max number of epochs")
+tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
 tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
 
@@ -33,27 +34,33 @@ def main(_):
   seed = int(time.time())
 
   with tf.Graph().as_default():
-    dataloader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
-    images, labels = dataloader.load_batch()
+    train_loader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
+    valid_loader = DataLoader(FLAGS.valid_set_path, FLAGS.batch_size)
+    train_images, train_labels = train_loader.load_batch()
+    valid_images, valid_labels = valid_loader.load_batch()
 
     tf.set_random_seed(seed)
     initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
     global_step = tf.contrib.framework.get_or_create_global_step()
 
     with tf.variable_scope("svhn", initializer=initializer):
-      logits = model.inference(images)
+      logits = model.inference(train_images)
       # logits = tf.Print(logits, [logits], message="TEST logits:", summarize=FLAGS.batch_size)
-      # labels = tf.Print(labels, [labels], message="TEST labels:", summarize=FLAGS.batch_size)
-      loss = model.loss(logits, labels)
+      # train_labels = tf.Print(train_labels, [train_labels], message="TEST labels:", summarize=FLAGS.batch_size)
+      loss = model.loss(logits, train_labels)
       # loss = tf.Print(loss, [loss], message="TEST loss:", summarize=FLAGS.batch_size)
-      op = model.optimize(loss, global_step)
+      train_op = model.optimize(loss, global_step)
 
+    with tf.variable_scope("svhn", reuse=True):
+      logits = model.inference(valid_images)
+      precision = model.evaluate(logits, valid_labels)
+    
     scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
 
     class _LoggerHook(tf.train.SessionRunHook):
       """Logs loss and runtime."""
       def after_create_session(self, session, coord):
-        dataloader.load(session)
+        train_loader.load(session)
         print("TEST after_create_session")
 
       def begin(self):
@@ -63,12 +70,12 @@ def main(_):
 
       def end(self, session):
         print("TEST end")
-        dataloader.close(session)
+        train_loader.close(session)
 
       def before_run(self, run_context):
         # print("TEST before_run")
         self._step += 1
-        return tf.train.SessionRunArgs(loss)  # Asks for loss value.
+        return tf.train.SessionRunArgs(loss), tf.train.SessionRunArgs(precision)
 
       def after_run(self, run_context, run_values):
         # print("TEST after_run")
@@ -82,9 +89,9 @@ def main(_):
           sec_per_batch = float(duration / FLAGS.log_frequency)
 
           format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
-                        'sec/batch)')
+                        'sec/batch), precision = %.2f\%')
           print(format_str % (datetime.now(), self._step, loss_value,
-                               examples_per_sec, sec_per_batch))
+                               examples_per_sec, sec_per_batch, precision))
 
     with tf.train.MonitoredTrainingSession(
         scaffold=scaffold,
@@ -95,22 +102,7 @@ def main(_):
         config=tf.ConfigProto(
             log_device_placement=FLAGS.log_device_placement)) as mon_sess:
       while not mon_sess.should_stop():
-        mon_sess.run(op)
-
-    '''
-    saver = tf.train.Saver()
-
-    with tf.variable_scope("SVHN", reuse=True):
-      logits = SVHN.inference(images)
-      loss = SVHN.loss(logits, labels)
-    
-    tf.global_vairables_initializer().run()
-    
-    for epoch in range(FLAGS.max_epochs):
-      for image_batch, label_batch in dataloader.iter():
-        session.run([], {})
-    '''
-        
+        mon_sess.run(train_op)
 
 if __name__ == "__main__":
   tf.app.run()
