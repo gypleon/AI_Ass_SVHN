@@ -17,25 +17,23 @@ import tensorflow as tf
 BATCH_SIZE = 100
 NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "./data/train_32x32.mat"
+GEN_TEST_PATH = "./data/test_images.mat"
 
 NUM_CLASSES = 10
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000
 NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
 
 class DataLoader:
-  def __init__(self, data_path, batch_size=50, dataset_size=None):
+  def __init__(self, data_path, batch_size=50, num_valid_samples=None):
     print("loading raw file:", data_path)
     data = sio.loadmat(data_path)
-    self.batch_size = batch_size
     self.images = data['X']
     self.labels = data['y']
     self.images = np.transpose(self.images, (3, 0, 1, 2))
     self.labels[self.labels==10] = 0
-    if dataset_size != None:
-      self.images = self.images[:dataset_size]
-      self.labels = self.labels[:dataset_size]
-
-    # fill queue
+    self.num_valid_samples = num_valid_samples
+    self.batch_size = num_valid_samples or batch_size
+    # create queue
     print("filling input queue")
     self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
     self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1], name="input_labels")
@@ -50,19 +48,18 @@ class DataLoader:
     self.coord = None
     self.coord = tf.train.Coordinator()
     self.threads = None
-    # TODO: deprecated
-    '''
-    num_samples = self.labels.shape[0]
-    num_batches = num_samples // batch_size
-    # last_batch_size = num_samples - num_batches * batch_size
-    split_conf = [batch_size*(i+1) for i in range(num_batches)]
-    split_conf.append(num_samples)
 
-    self.image_batches = np.split(np.transpose(self.images, (3, 0, 1, 2)), split_conf, axis=0)
-    self.label_batches = np.split(self.labels, split_conf, axis=0)
-    '''
-
+  def random_valid_set(self):
+    num_valid_samples = self.num_valid_samples
+    dataset_size = self.images.shape[0]
+    start = np.random.randint(0, dataset_size - num_valid_samples)
+    self.images = self.images[start:start+num_valid_samples]
+    self.labels = self.labels[start:start+num_valid_samples]
+    print("randomly validation set [%d:%d]" % (start, start+num_valid_samples))
+    
   def data_stream(self, session):
+    if self.num_valid_samples != None:
+      self.random_valid_set()
     start = 0
     dataset_size = len(self.labels)
     try:
@@ -152,22 +149,3 @@ if __name__ == "__main__":
       dataloader.close(session)
   # plt.show()
 
-  # TODO: deprecated
-  '''
-  batch_count = 0
-  fig = plt.figure()
-  num_plot_cols = NUM_SUBPLOT_COLS
-  num_plot_rows = int(math.ceil(BATCH_SIZE/num_plot_cols))
-  labels = []
-  for image_batch, label_batch in dataloader.iter():
-    if batch_count > 0:
-      break
-    for batch_i in range(BATCH_SIZE):
-      sub_plot = fig.add_subplot(num_plot_rows, num_plot_cols, batch_i+1)
-      plt.imshow(image_batch[batch_i])
-    batch_count += 1
-    labels.append([label[0] for label in label_batch])
-
-  print(labels)
-  plt.show()
-  '''

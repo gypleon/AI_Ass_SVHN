@@ -93,11 +93,10 @@ def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="opt
     train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
   return train_op
 
-def evaluate(session, top_k_op, num_examples, batch_size):
+def evaluate(session, top_k_op, num_examples):
   predictions = session.run([top_k_op])
   true_count = np.sum(predictions)
-  # Compute precision @ 1.
   precision = float(true_count) / num_examples
-  if precision >= .8:
+  if precision >= .9:
     print(predictions)
   return precision * 100

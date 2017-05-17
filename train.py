@@ -23,9 +23,9 @@ tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of
 tf.app.flags.DEFINE_string ("valid_set_path", "./data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
-tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
+tf.app.flags.DEFINE_float  ("learning_rate", 0.01, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
-tf.app.flags.DEFINE_integer('num_examples', 1000, "")
+tf.app.flags.DEFINE_integer('num_valid_examples', 1000, "")
 
 
 # train model
@@ -38,7 +38,7 @@ def main(_):
 
   with tf.Graph().as_default():
     train_loader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
-    valid_loader = DataLoader(FLAGS.valid_set_path, FLAGS.valid_batch_size, 1000)
+    valid_loader = DataLoader(FLAGS.valid_set_path, num_valid_samples=1000)
     train_images, train_labels = train_loader.load_batch()
     valid_images, valid_labels = valid_loader.load_batch()
 
@@ -52,7 +52,7 @@ def main(_):
       # train_labels = tf.Print(train_labels, [train_labels], message="TEST labels:", summarize=FLAGS.batch_size)
       loss = model.loss(logits, train_labels)
       # loss = tf.Print(loss, [loss], message="TEST loss:", summarize=FLAGS.batch_size)
-      train_op = model.optimize(loss, global_step)
+      train_op = model.optimize(loss, global_step, FLAGS.learning_rate)
 
     with tf.variable_scope("svhn", reuse=True):
       logits = model.inference(valid_images)
@@ -94,7 +94,7 @@ def main(_):
           sec_per_batch = float(duration / FLAGS.log_frequency)
 
           if self._step % FLAGS.eval_frequency == 0:
-            precision = model.evaluate(run_context.session, top_k_op, FLAGS.num_examples, FLAGS.batch_size)
+            precision = model.evaluate(run_context.session, top_k_op, FLAGS.num_valid_examples)
             format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
                           'sec/batch), precision = %.2f%%')
             print(format_str % (datetime.now(), self._step, loss_value,
