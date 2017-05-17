@@ -31,8 +31,8 @@ class DataLoader:
     self.images = np.transpose(self.images, (3, 0, 1, 2))
 
     # fill queue
-    self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3])
-    self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1])
+    self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
+    self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1], name="input_labels")
     self.example_queue = tf.FIFOQueue(
       capacity=NUM_EXAMPLES_PER_EPOCH_FOR_EVAL + 3 * self.batch_size,
       dtypes=[tf.int64, tf.int64],
@@ -44,6 +44,7 @@ class DataLoader:
     self.coord = None
     self.coord = tf.train.Coordinator()
     self.threads = None
+    # TODO: deprecated
     '''
     num_samples = self.labels.shape[0]
     num_batches = num_samples // batch_size
@@ -139,7 +140,7 @@ if __name__ == "__main__":
       dataloader.close(session)
   # plt.show()
 
-  # deprecated
+  # TODO: deprecated
   '''
   batch_count = 0
   fig = plt.figure()

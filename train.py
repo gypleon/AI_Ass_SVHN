@@ -10,12 +10,12 @@ import tensorflow as tf
 import numpy as np
 
 from dataloader import DataLoader
-from model import SVHN
+import model
 
 FLAGS = tf.app.flags.FLAGS
 
 # configuration
-tf.app.flags.DEFINE_integer("batch_size", 50, "batch size")
+tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
@@ -32,21 +32,19 @@ def main(_):
 
   seed = int(time.time())
 
-  train_set_loader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
-  
   with tf.Graph().as_default():
     # TODO: load data
-    images = tf.placeholder(tf.int64, shape=[batch_size, 32, 32], name="inputs")
-    labels = tf.placeholder(tf.int64, shape=[batch_size], name="labels")
+    dataloader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
+    images, labels = dataloader.load_batch()
 
     tf.set_random_seed(seed)
     initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
     global_step = tf.contrib.framework.get_or_create_global_step()
 
     with tf.variable_scope("SVHN", initializer=initializer):
-      logits = SVHN.inference(images)
-      loss = SVHN.loss(logits, labels)
-      op = SVHN.optimize(loss, global_step)
+      logits = model.inference(images)
+      loss = model.loss(logits, labels)
+      op = model.optimize(loss, global_step)
 
     class _LoggerHook(tf.train.SessionRunHook):
       """Logs loss and runtime."""
@@ -71,7 +69,7 @@ def main(_):
 
           format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
                         'sec/batch)')
-          print (format_str % (datetime.now(), self._step, loss_value,
+          print(format_str % (datetime.now(), self._step, loss_value,
                                examples_per_sec, sec_per_batch))
 
     with tf.train.MonitoredTrainingSession(
@@ -81,8 +79,10 @@ def main(_):
                _LoggerHook()],
         config=tf.ConfigProto(
             log_device_placement=FLAGS.log_device_placement)) as mon_sess:
+      dataloader.load(mon_sess)
       while not mon_sess.should_stop():
         mon_sess.run(op)
+      dataloader.close(mon_sess)
 
     '''
     saver = tf.train.Saver()
@@ -94,7 +94,7 @@ def main(_):
     tf.global_vairables_initializer().run()
     
     for epoch in range(FLAGS.max_epochs):
-      for image_batch, label_batch in train_set_loader.iter():
+      for image_batch, label_batch in dataloader.iter():
         session.run([], {})
     '''
         
