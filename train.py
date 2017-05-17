@@ -33,7 +33,6 @@ def main(_):
   seed = int(time.time())
 
   with tf.Graph().as_default():
-    # TODO: load data
     dataloader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
     images, labels = dataloader.load_batch()
 
@@ -42,26 +41,37 @@ def main(_):
     global_step = tf.contrib.framework.get_or_create_global_step()
 
     with tf.variable_scope("svhn", initializer=initializer):
-      print("TEST 1")
       logits = model.inference(images)
+      logits = tf.Print(logits, [logits], message="TEST logits:")
+      labels = tf.Print(labels, [labels], message="TEST labels:")
       loss = model.loss(logits, labels)
+      loss = tf.Print(loss, [loss], message="TEST loss:")
       op = model.optimize(loss, global_step)
+
+    scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
 
     class _LoggerHook(tf.train.SessionRunHook):
       """Logs loss and runtime."""
+      def after_create_session(self, session, coord):
+        dataloader.load(session)
+        print("TEST after_create_session")
 
       def begin(self):
-        print("TEST 2")
+        print("TEST begin")
         self._step = -1
         self._start_time = time.time()
 
+      def end(self, session):
+        print("TEST end")
+        dataloader.close(session)
+
       def before_run(self, run_context):
-        print("TEST 3")
+        print("TEST before_run")
         self._step += 1
         return tf.train.SessionRunArgs(loss)  # Asks for loss value.
 
       def after_run(self, run_context, run_values):
-        print("TEST 4")
+        print("TEST after_run")
         if self._step % FLAGS.log_frequency == 0:
           current_time = time.time()
           duration = current_time - self._start_time
@@ -77,20 +87,15 @@ def main(_):
                                examples_per_sec, sec_per_batch))
 
     with tf.train.MonitoredTrainingSession(
+        scaffold=scaffold,
         checkpoint_dir=FLAGS.log_dir,
         hooks=[tf.train.StopAtStepHook(last_step=FLAGS.max_epochs),
                tf.train.NanTensorHook(loss),
                _LoggerHook()],
         config=tf.ConfigProto(
             log_device_placement=FLAGS.log_device_placement)) as mon_sess:
-      print("TEST 5")
-      dataloader.load(mon_sess)
-      print("TEST 6")
       while not mon_sess.should_stop():
-        print("TEST 7")
         mon_sess.run(op)
-      print("TEST 8")
-      dataloader.close(mon_sess)
 
     '''
     saver = tf.train.Saver()
