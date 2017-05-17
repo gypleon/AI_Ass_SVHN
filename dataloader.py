@@ -33,6 +33,8 @@ class DataLoader:
     self.labels[self.labels==10] = 0
     self.num_valid_samples = num_valid_samples
     self.batch_size = num_valid_samples or batch_size
+    if self.num_valid_samples != None:
+      self.random_valid_set()
     # create queue
     print("filling input queue")
     self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
@@ -55,11 +57,9 @@ class DataLoader:
     start = np.random.randint(0, dataset_size - num_valid_samples)
     self.images = self.images[start:start+num_valid_samples]
     self.labels = self.labels[start:start+num_valid_samples]
-    print("randomly validation set [%d:%d]" % (start, start+num_valid_samples))
+    print("random validation set [%d:%d]" % (start, start+num_valid_samples))
     
   def data_stream(self, session):
-    if self.num_valid_samples != None:
-      self.random_valid_set()
     start = 0
     dataset_size = len(self.labels)
     try:

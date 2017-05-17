@@ -27,7 +27,7 @@ def inference(inputs):
   fc2 = fc(fc1, 192, scope="fc2")
   # softmax: linear transformation to produce logits.
   # softmax is NOT performed here for efficiency
-  logits = fc(fc2, 10, scope="softmax_fc")
+  logits = fc(fc2, 10, activation=None, scope="softmax_fc")
   return logits
   
 def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME", activation=tf.nn.relu, weight_decay=True, scope="conv2d"):
@@ -37,11 +37,11 @@ def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME"
     padding:  "VALID" - no padding
               "SAME" - zero padding
   '''
-  # TODO: add weight decay
   # TODO: specify initializer for weights and biases
   with tf.variable_scope(scope):
-    weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
-    bias = tf.get_variable("b", [num_out_channels])
+    weights = get_decay_weight("w", shape=[height, width, input_data.get_shape()[-1], num_out_channels], stddev=5e-2, wd=0.0)
+    # weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
+    bias = tf.get_variable("b", [num_out_channels], initializer=tf.constant_initializer(0.0), dtype=tf.float32)
     if activation:
       return activation(tf.nn.bias_add(tf.nn.conv2d(input_data, weights, strides=[1, stride, stride, 1], padding=padding), bias))
     else:
@@ -54,43 +54,47 @@ def fc(input_data, output_dim, activation=tf.nn.relu, scope="fc"):
   shape = input_data.get_shape().as_list()
   with tf.variable_scope(scope):
     if len(shape) == 2:
-      weights = tf.get_variable("w", [shape[1], output_dim])
+      weights = get_decay_weight("w", shape=[shape[1], output_dim], stddev=0.04, wd=0.004)
+      # weights = tf.get_variable("w", [shape[1], output_dim])
       input_data = tf.reshape(input_data, [-1, weights.get_shape().as_list()[0]])
     elif len(shape) == 4:
+      weights = get_decay_weight("w", shape=[shape[1]*shape[2]*shape[3], output_dim], stddev=0.04, wd=0.004)
+      # weights = tf.get_variable("w", [shape[1]*shape[2]*shape[3], output_dim])
       input_data = tf.reshape(input_data, [shape[0], -1])
-      weights = tf.get_variable("w", [shape[1]*shape[2]*shape[3], output_dim])
     else:
       raise ValueError("Linear expects 2D/4D shape: %d" % len(shape))
-    bias = tf.get_variable("b", [output_dim])
+    bias = tf.get_variable("b", [output_dim], initializer=tf.constant_initializer(0.1), dtype=tf.float32)
   if activation:
-    return activation(tf.nn.bias_add(tf.matmul(input_data, weights), bias))
+    return activation(tf.matmul(input_data, weights) + bias)
   else:
-    return tf.nn.bias_add(tf.matmul(input_data, weights), bias)
+    return tf.add(tf.matmul(input_data, weights), bias, name=scope)
 
 def loss(logits, labels, scope="loss"):
   ''' 
     input:    [batch, classes]
   '''
   labels = tf.stack(labels, name="input_labels_tensor")
+  labels = tf.cast(labels, tf.int64)
   with tf.variable_scope(scope):
     cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels, logits=logits, name="cross_entropy_per_example")
     cross_entropy_mean = tf.reduce_mean(cross_entropy, name="cross_entropy_mean")
-    loss = cross_entropy_mean
-    # TODO: add weight decay loss
-    # tf.add_to_collection("losses", cross_entropy_mean)
-    # loss = tf.add_n(tf.get_collection("losses", name="total_loss")
+    # loss = cross_entropy_mean
+    tf.add_to_collection("losses", cross_entropy_mean)
+    loss = tf.add_n(tf.get_collection("losses"), name="total_loss")
   return loss
 
 def optimize(loss, global_step, learning_rate=1.0, max_grad_norm=5.0, scope="optimize"):
   # for continuing training
   with tf.variable_scope(scope):
-    tvars = tf.trainable_variables()
-    grads, global_norm = tf.clip_by_global_norm(tf.gradients(loss, tvars), max_grad_norm)
+    learning_rate = tf.Variable(learning_rate, trainable=False, name='learning_rate')
     # TODO: other optimizers?
-    # learning_rate = tf.get_variable(learning_rate, trainable=False, name='learning_rate')
-    # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+    # tvars = tf.trainable_variables()
+    # grads, global_norm = tf.clip_by_global_norm(tf.gradients(loss, tvars), max_grad_norm)
     optimizer = tf.train.AdamOptimizer(learning_rate)
     train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step)
+    # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+    # grads = optimizer.compute_gradients(loss)
+    train_op = optimizer.apply_gradients(grads, global_step=global_step)
   return train_op
 
 def evaluate(session, top_k_op, num_examples):
@@ -100,3 +104,17 @@ def evaluate(session, top_k_op, num_examples):
   if precision >= .9:
     print(predictions)
   return precision * 100
+
+def get_var_cpu(name, shape, initializer):
+  # with tf.device('/cpu:0'):
+  var = tf.get_variable(name, shape, initializer=initializer, dtype=tf.float32)
+  return var
+
+def get_decay_weight(name, shape, stddev, wd):
+  var = get_var_cpu(name, shape,
+    tf.truncated_normal_initializer(stddev=stddev, dtype=tf.float32))
+  if wd is not None:
+    weight_decay = tf.multiply(tf.nn.l2_loss(var), wd, name='weight_loss')
+    tf.add_to_collection('losses', weight_decay)
+  return var
+
