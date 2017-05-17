@@ -19,7 +19,7 @@ tf.app.flags.DEFINE_integer("batch_size", 100, "batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "./data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("log_dir", "/tmp/svhn/logs", "path of checkpoints/logs")
-tf.app.flags.DEFINE_integer("max_epochs", 10, "max number of epochs")
+tf.app.flags.DEFINE_integer("max_epochs", 100000, "max number of epochs")
 tf.app.flags.DEFINE_float  ("learning_rate", 1.0, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
 
@@ -42,10 +42,10 @@ def main(_):
 
     with tf.variable_scope("svhn", initializer=initializer):
       logits = model.inference(images)
-      logits = tf.Print(logits, [logits], message="TEST logits:")
-      labels = tf.Print(labels, [labels], message="TEST labels:")
+      # logits = tf.Print(logits, [logits], message="TEST logits:", summarize=FLAGS.batch_size)
+      # labels = tf.Print(labels, [labels], message="TEST labels:", summarize=FLAGS.batch_size)
       loss = model.loss(logits, labels)
-      loss = tf.Print(loss, [loss], message="TEST loss:")
+      # loss = tf.Print(loss, [loss], message="TEST loss:", summarize=FLAGS.batch_size)
       op = model.optimize(loss, global_step)
 
     scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
@@ -57,7 +57,7 @@ def main(_):
         print("TEST after_create_session")
 
       def begin(self):
-        print("TEST begin")
+        # print("TEST begin")
         self._step = -1
         self._start_time = time.time()
 
@@ -66,12 +66,12 @@ def main(_):
         dataloader.close(session)
 
       def before_run(self, run_context):
-        print("TEST before_run")
+        # print("TEST before_run")
         self._step += 1
         return tf.train.SessionRunArgs(loss)  # Asks for loss value.
 
       def after_run(self, run_context, run_values):
-        print("TEST after_run")
+        # print("TEST after_run")
         if self._step % FLAGS.log_frequency == 0:
           current_time = time.time()
           duration = current_time - self._start_time

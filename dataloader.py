@@ -30,6 +30,7 @@ class DataLoader:
     self.images = data['X']
     self.labels = data['y']
     self.images = np.transpose(self.images, (3, 0, 1, 2))
+    self.labels[self.labels==10] = 0
 
     # fill queue
     print("filling input queue")
