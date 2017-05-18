@@ -19,7 +19,7 @@ tf.app.flags.DEFINE_integer("batch_size", 128, "batch size")
 tf.app.flags.DEFINE_integer("valid_batch_size", 1000, "validation batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
 tf.app.flags.DEFINE_integer("eval_frequency", 200, "evaluation frequency")
-tf.app.flags.DEFINE_string ("train_set_path", "../data/train_32x32.mat", "path of the train set")
+tf.app.flags.DEFINE_string ("train_set_path", "../data/train.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("valid_set_path", "../data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "./trained_model", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
@@ -43,16 +43,11 @@ def main(_):
     valid_images, valid_labels = valid_loader.load_batch()
 
     tf.set_random_seed(seed)
-    # initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
     global_step = tf.contrib.framework.get_or_create_global_step()
 
-    # with tf.variable_scope("svhn", initializer=initializer):
     with tf.variable_scope("svhn"):
       logits = model.inference(train_images)
-      # logits = tf.Print(logits, [logits], message="TEST logits:", summarize=FLAGS.batch_size)
-      # train_labels = tf.Print(train_labels, [train_labels], message="TEST labels:", summarize=FLAGS.batch_size)
       loss = model.loss(logits, train_labels)
-      # loss = tf.Print(loss, [loss], message="TEST loss:", summarize=FLAGS.batch_size)
       train_op = model.optimize(loss, global_step, FLAGS.learning_rate, FLAGS.batch_size)
 
     with tf.variable_scope("svhn", reuse=True):
@@ -67,25 +62,20 @@ def main(_):
       def after_create_session(self, session, coord):
         train_loader.load(session)
         valid_loader.load(session)
-        print("TEST after_create_session")
 
       def begin(self):
-        # print("TEST begin")
         self._step = -1
         self._start_time = time.time()
 
       def end(self, session):
-        print("TEST end")
         train_loader.close(session)
         valid_loader.close(session)
 
       def before_run(self, run_context):
-        # print("TEST before_run")
         self._step += 1
         return tf.train.SessionRunArgs(loss)
 
       def after_run(self, run_context, run_values):
-        # print("TEST after_run")
         if self._step % FLAGS.log_frequency == 0:
           current_time = time.time()
           duration = current_time - self._start_time
