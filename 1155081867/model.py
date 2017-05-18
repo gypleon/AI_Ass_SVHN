@@ -144,3 +144,11 @@ def add_loss_summaries(loss):
   losses = tf.get_collection('losses')
   loss_averages_op = loss_averages.apply(losses + [loss])
   return loss_averages_op
+
+def prediction(logits):
+  splited_logits = tf.split(logits, 1000)
+  predictions = []
+  for logit in splited_logits:
+    _, label = tf.nn.top_k(logit)
+    predictions.append(label)
+  return predictions
