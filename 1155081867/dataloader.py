@@ -92,6 +92,8 @@ class DataLoader:
 
   def preprocess(self):
     image, label = self.example_queue.dequeue()
+    image = tf.cast(image, tf.float32)
+    label = tf.cast(label, tf.int32)
     if self.num_valid_samples == None:
       image = tf.random_crop(image, [CROP_H, CROP_W, 3])
       image = tf.image.random_flip_left_right(image)
@@ -119,18 +121,6 @@ class DataLoader:
         batch_size=self.batch_size,
         num_threads=4,
         capacity=int(self.num_valid_samples * 0.4) + 3 * self.batch_size)
-      '''
-      image_batch = []
-      label_batch = []
-      for i in range(self.num_valid_samples):
-        image_batch.append(tf.stack(self.images[i]))
-        # image_batch[i] = tf.image.central_crop(image_batch[i], CROP_RATE)
-        image_batch[i] = tf.image.resize_image_with_crop_or_pad(image_batch[i], CROP_H, CROP_W)
-        image_batch[i] = tf.image.per_image_standardization(image_batch[i])
-        label_batch.append(tf.cast(tf.stack(self.labels[i]), dtype=tf.int32))
-      image_batch = tf.stack(image_batch)
-      label_batch = tf.stack(label_batch)
-      '''
     # tf.summary.image('images', image_batch)
     print("loading batch of samples:", self.batch_size) 
     return image_batch, tf.reshape(label_batch, [self.batch_size])
