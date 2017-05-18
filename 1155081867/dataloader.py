@@ -14,18 +14,18 @@ import tensorflow as tf
 
 
 # configuration
-BATCH_SIZE = 100
+BATCH_SIZE = 128
 NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "../data/train_32x32.mat"
 VALID_DATASET_PATH = "./data/test_32x32.mat"
 GEN_TEST_PATH = "../data/test_images.mat"
-CROP_H = 24
-CROP_W = 24
 CROP_RATE = 0.75
+CROP_H = int(32 * CROP_RATE)
+CROP_W = int(32 * CROP_RATE)
 
 NUM_CLASSES = 10
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 73257
-NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 1000
+NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 100
 
 class DataLoader:
   def __init__(self, data_path, batch_size=50, num_valid_samples=None):
@@ -41,18 +41,20 @@ class DataLoader:
       self.random_valid_set()
     # create queue
     print("filling input queue")
-    self.queue_image = tf.placeholder(tf.int64, shape=[self.batch_size, 32, 32, 3], name="input_images")
-    self.queue_label = tf.placeholder(tf.int64, shape=[self.batch_size, 1], name="input_labels")
+    self.queue_image = tf.placeholder(tf.int32, shape=[self.batch_size, 32, 32, 3], name="input_images")
+    self.queue_label = tf.placeholder(tf.int32, shape=[self.batch_size, 1], name="input_labels")
     if self.num_valid_samples == None:
       capacity=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4) + 3 * self.batch_size
-      self.example_queue = tf.FIFOQueue(
-        capacity=capacity,
-        dtypes=[tf.int64, tf.int64],
-        shapes=[[32, 32, 3], [1]])
-      self.enqueue = self.example_queue.enqueue_many([self.queue_image, self.queue_label])
-      self.enqueue_thread = None
-      self.coord = tf.train.Coordinator()
-      self.threads = None
+    else:
+      capacity=int(self.num_valid_samples * 0.4) + 3 * self.batch_size
+    self.example_queue = tf.FIFOQueue(
+      capacity=capacity,
+      dtypes=[tf.int32, tf.int32],
+      shapes=[[32, 32, 3], [1]])
+    self.enqueue = self.example_queue.enqueue_many([self.queue_image, self.queue_label])
+    self.enqueue_thread = None
+    self.coord = tf.train.Coordinator()
+    self.threads = None
 
   def random_valid_set(self):
     num_valid_samples = self.num_valid_samples
@@ -63,41 +65,48 @@ class DataLoader:
     print("random validation set [%d:%d]" % (start, start+num_valid_samples))
     
   def data_stream(self, session):
-    start = 0
-    dataset_size = len(self.labels)
-    while not self.coord.should_stop():
-      end = start + self.batch_size
-      # print("loading [%d:%d] into input queue..." % (start, end))
-      if end <= dataset_size:
-        image_batch = self.images[start:end]
-        label_batch = self.labels[start:end]
-        start = end
-      else:
-        remaining = end - dataset_size
-        image_batch = np.concatenate((self.images[start:dataset_size], self.images[0:remaining]))
-        label_batch = np.concatenate((self.labels[start:dataset_size], self.labels[0:remaining]))
-        start = remaining
-      session.run(
-        self.enqueue, 
-        feed_dict={
-          self.queue_image : image_batch,
-          self.queue_label : label_batch})
-    print("data stream closed.")
+    try:
+      start = 0
+      dataset_size = len(self.labels)
+      while not self.coord.should_stop():
+        end = start + self.batch_size
+        # print("loading [%d:%d] into input queue..." % (start, end))
+        if end <= dataset_size:
+          image_batch = self.images[start:end]
+          label_batch = self.labels[start:end]
+          start = end
+        else:
+          remaining = end - dataset_size
+          image_batch = np.concatenate((self.images[start:dataset_size], self.images[0:remaining]))
+          label_batch = np.concatenate((self.labels[start:dataset_size], self.labels[0:remaining]))
+          start = remaining
+        session.run(
+          self.enqueue, 
+          feed_dict={
+            self.queue_image : image_batch,
+            self.queue_label : label_batch})
+      print("data stream closed.")
+    except:
+      print("data stream closed.")
+      sys.exit()
 
   def preprocess(self):
     image, label = self.example_queue.dequeue()
-    image = tf.image.central_crop(image, CROP_RATE)
-    distorted_image = tf.image.random_flip_left_right(image)
-    distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
-    distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
-    float_image = tf.image.per_image_standardization(distorted_image)
+    if self.num_valid_samples == None:
+      image = tf.random_crop(image, [CROP_H, CROP_W, 3])
+      image = tf.image.random_flip_left_right(image)
+      image = tf.image.random_brightness(image, max_delta=63)
+      image = tf.image.random_contrast(image, lower=0.2, upper=1.8)
+    else:
+      image = tf.image.resize_image_with_crop_or_pad(image, CROP_H, CROP_W)
+    float_image = tf.image.per_image_standardization(image)
     return float_image, label
 
   def load_batch(self):
+    image, label= self.preprocess()
+    image.set_shape([int(32 * CROP_RATE), int(32 * CROP_RATE), 3])
+    label.set_shape([1])
     if self.num_valid_samples == None:
-      image, label= self.preprocess()
-      image.set_shape([32 * CROP_RATE, 32 * CROP_RATE, 3])
-      label.set_shape([1])
       image_batch, label_batch = tf.train.shuffle_batch(
         [image, label],
         batch_size=self.batch_size,
@@ -105,7 +114,6 @@ class DataLoader:
         capacity=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4) + 3 * self.batch_size,
         min_after_dequeue=int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * 0.4))
     else:
-      '''
       image_batch, label_batch = tf.train.batch(
         [image, label],
         batch_size=self.batch_size,
@@ -116,12 +124,13 @@ class DataLoader:
       label_batch = []
       for i in range(self.num_valid_samples):
         image_batch.append(tf.stack(self.images[i]))
-        image_batch[i] = tf.image.central_crop(image_batch[i], CROP_RATE)
+        # image_batch[i] = tf.image.central_crop(image_batch[i], CROP_RATE)
+        image_batch[i] = tf.image.resize_image_with_crop_or_pad(image_batch[i], CROP_H, CROP_W)
         image_batch[i] = tf.image.per_image_standardization(image_batch[i])
         label_batch.append(tf.cast(tf.stack(self.labels[i]), dtype=tf.int32))
       image_batch = tf.stack(image_batch)
       label_batch = tf.stack(label_batch)
-
+      '''
     # tf.summary.image('images', image_batch)
     print("loading batch of samples:", self.batch_size) 
     return image_batch, tf.reshape(label_batch, [self.batch_size])
@@ -137,25 +146,3 @@ class DataLoader:
     self.coord.request_stop()
     self.coord.join(self.threads)
     print("dataloader closed successfully.")
-
-if __name__ == "__main__":
-  fig = plt.figure()
-  num_valid_samples = NUM_EXAMPLES_PER_EPOCH_FOR_EVAL
-  num_plot_cols = NUM_SUBPLOT_COLS
-  num_plot_rows = int(math.ceil(num_valid_samples/num_plot_cols))
-  labels = []
-
-  with tf.Graph().as_default():
-    dataloader = DataLoader(VALID_DATASET_PATH, num_valid_samples=num_valid_samples)
-    image_batch, label_batch = dataloader.load_batch()
-    run_options = tf.RunOptions(timeout_in_ms=4000000)
-    with tf.Session() as session:
-      images, labels = session.run([image_batch, label_batch], options=run_options)
-      print(images.shape, labels.shape)
-      for row in range(num_plot_rows):
-        print(labels[row*num_plot_cols:(row+1)*num_plot_cols])
-      for batch_i in range(num_valid_samples):
-        sub_plot = fig.add_subplot(num_plot_rows, num_plot_cols, batch_i+1)
-        plt.imshow(images[batch_i])
-  plt.show()
-
