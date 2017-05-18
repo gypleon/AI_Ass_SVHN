@@ -82,6 +82,7 @@ class DataLoader:
     self.images = self.images[start:start+num_valid_samples]
     self.labels = self.labels[start:start+num_valid_samples]
     print("random validation set [%d:%d]" % (start, start+num_valid_samples))
+    '''
     gen_test_dict = {'X':np.transpose(self.images, (1, 2, 3, 0))}
     sio.savemat(GEN_TEST_PATH, gen_test_dict)
     with open("labels_truth.txt", "w") as f:
@@ -91,6 +92,7 @@ class DataLoader:
         else:
           f.write("%d\n" % label)
     print("generated", GEN_TEST_PATH)
+    '''
     
   def data_stream(self, session):
     try:
