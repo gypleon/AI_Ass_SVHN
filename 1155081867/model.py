@@ -23,27 +23,27 @@ def inference(inputs):
   '''
   inputs = tf.stack(inputs, name="input_images_tensor")
   # conv1: convolution and rectified linear activation.
-  conv1 = conv2d(inputs, 5, 5, 64, scope="conv1")
+  conv1 = conv2d(inputs, 5, 5, 64, 0.0, scope="conv1")
   # pool1: max pooling.
   pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1], padding="SAME", name="pool1")
   # norm1: local response normalization.
   norm1 = tf.nn.lrn(pool1, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75, name='norm1')
   # conv2: convolution and rectified linear activation.
-  conv2 = conv2d(norm1, 5, 5, 64, scope="conv2")
+  conv2 = conv2d(norm1, 5, 5, 64, 0.1, scope="conv2")
   # norm2: local response normalization.
   norm2 = tf.nn.lrn(conv2, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75, name='norm2')
   # pool2: max pooling.
   pool2 = tf.nn.max_pool(norm2, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1], padding="SAME", name="pool2")
   # fc1: fully connected layer with rectified linear activation.
-  fc1 = fc(pool2, 384, scope="fc1")
+  fc1 = fc(pool2, 384, 0.1, scope="fc1")
   # fc2: fully connected layer with rectified linear activation.
-  fc2 = fc(fc1, 192, scope="fc2")
+  fc2 = fc(fc1, 192, 0.1, scope="fc2")
   # softmax: linear transformation to produce logits.
   # softmax is NOT performed here for efficiency
-  logits = fc(fc2, 10, activation=None, scope="softmax_fc")
+  logits = fc(fc2, 10, 0.0, stddev=1/192.0, wd=0.0, activation=None, scope="softmax_fc")
   return logits
   
-def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME", activation=tf.nn.relu, weight_decay=True, scope="conv2d"):
+def conv2d(input_data, height, width, num_out_channels, bias_init, stride=1, padding="SAME", activation=tf.nn.relu, weight_decay=True, scope="conv2d"):
   ''' 
     input:    [batch, in_height, in_width, in_channels]
     filter:   [filter_height, filter_width, in_channels, out_channels]
@@ -53,31 +53,31 @@ def conv2d(input_data, height, width, num_out_channels, stride=1, padding="SAME"
   with tf.variable_scope(scope):
     weights = get_decay_weight("w", shape=[height, width, input_data.get_shape()[-1], num_out_channels], stddev=5e-2, wd=0.0)
     # weights = tf.get_variable("w", [height, width, input_data.get_shape()[-1], num_out_channels])
-    bias = tf.get_variable("b", [num_out_channels], initializer=tf.constant_initializer(0.0), dtype=tf.float32)
+    bias = tf.get_variable("b", [num_out_channels], initializer=tf.constant_initializer(bias_init), dtype=tf.float32)
     if activation:
       return activation(tf.nn.bias_add(tf.nn.conv2d(input_data, weights, strides=[1, stride, stride, 1], padding=padding), bias))
     else:
       return tf.nn.bias_add(tf.nn.conv2d(input_data, weights, strides=[1, stride, stride, 1], padding=padding), bias)
 
-def fc(input_data, output_dim, activation=tf.nn.relu, scope="fc"):
+def fc(input_data, output_dim, bias_init, stddev=0.04, wd=0.004, activation=tf.nn.relu, scope="fc"):
   ''' 
     input:    [batch, in_channels]
   '''
   shape = input_data.get_shape().as_list()
   with tf.variable_scope(scope):
     if len(shape) == 2:
-      weights = get_decay_weight("w", shape=[shape[1], output_dim], stddev=0.04, wd=0.004)
+      # input_data = tf.reshape(input_data, [-1, weights.get_shape().as_list()[0]])
+      weights = get_decay_weight("w", shape=[shape[1], output_dim], stddev=stddev, wd=wd)
       # weights = tf.get_variable("w", [shape[1], output_dim])
-      input_data = tf.reshape(input_data, [-1, weights.get_shape().as_list()[0]])
     elif len(shape) == 4:
-      weights = get_decay_weight("w", shape=[shape[1]*shape[2]*shape[3], output_dim], stddev=0.04, wd=0.004)
-      # weights = tf.get_variable("w", [shape[1]*shape[2]*shape[3], output_dim])
       input_data = tf.reshape(input_data, [shape[0], -1])
+      weights = get_decay_weight("w", shape=[input_data.get_shape()[1].value, output_dim], stddev=stddev, wd=wd)
+      # weights = tf.get_variable("w", [shape[1]*shape[2]*shape[3], output_dim])
     else:
       raise ValueError("Linear expects 2D/4D shape: %d" % len(shape))
-    bias = tf.get_variable("b", [output_dim], initializer=tf.constant_initializer(0.1), dtype=tf.float32)
+    bias = tf.get_variable("b", [output_dim], initializer=tf.constant_initializer(bias_init), dtype=tf.float32)
   if activation:
-    return activation(tf.matmul(input_data, weights) + bias)
+    return activation(tf.matmul(input_data, weights) + bias, name=scope)
   else:
     return tf.add(tf.matmul(input_data, weights), bias, name=scope)
 

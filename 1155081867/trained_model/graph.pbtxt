@@ -5109,7 +5109,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495058088
+      i: 1495091461
     }
   }
   attr {
@@ -6029,7 +6029,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495058088
+      i: 1495091461
     }
   }
   attr {
@@ -6394,7 +6394,7 @@ node {
             size: 64
           }
         }
-        float_val: 0.0
+        float_val: 0.10000000149
       }
     }
   }
@@ -6782,6 +6782,75 @@ node {
   }
 }
 node {
+  name: "svhn/fc1/Reshape/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        tensor_content: "\200\000\000\000\377\377\377\377"
+      }
+    }
+  }
+}
+node {
+  name: "svhn/fc1/Reshape"
+  op: "Reshape"
+  input: "svhn/pool2"
+  input: "svhn/fc1/Reshape/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 128
+          }
+          dim {
+            size: 4096
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "svhn/fc1/w/Initializer/truncated_normal/shape"
   op: "Const"
   attr {
@@ -6943,13 +7012,13 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495058088
+      i: 1495091461
     }
   }
   attr {
     key: "seed2"
     value {
-      i: 209
+      i: 211
     }
   }
 }
@@ -7234,75 +7303,6 @@ node {
   }
 }
 node {
-  name: "svhn/fc1/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\200\000\000\000\377\377\377\377"
-      }
-    }
-  }
-}
-node {
-  name: "svhn/fc1/Reshape"
-  op: "Reshape"
-  input: "svhn/pool2"
-  input: "svhn/fc1/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 128
-          }
-          dim {
-            size: 4096
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "svhn/fc1/b/Initializer/Const"
   op: "Const"
   attr {
@@ -7540,7 +7540,7 @@ node {
   }
 }
 node {
-  name: "svhn/Relu"
+  name: "svhn/fc1_1"
   op: "Relu"
   input: "svhn/add"
   attr {
@@ -7727,7 +7727,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495058088
+      i: 1495091461
     }
   }
   attr {
@@ -8018,75 +8018,6 @@ node {
   }
 }
 node {
-  name: "svhn/fc2/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\377\377\377\377\200\001\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn/fc2/Reshape"
-  op: "Reshape"
-  input: "svhn/Relu"
-  input: "svhn/fc2/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 128
-          }
-          dim {
-            size: 384
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "svhn/fc2/b/Initializer/Const"
   op: "Const"
   attr {
@@ -8260,7 +8191,7 @@ node {
 node {
   name: "svhn/MatMul_1"
   op: "MatMul"
-  input: "svhn/fc2/Reshape"
+  input: "svhn/fc1_1"
   input: "svhn/fc2/w/read"
   attr {
     key: "T"
@@ -8324,7 +8255,7 @@ node {
   }
 }
 node {
-  name: "svhn/Relu_1"
+  name: "svhn/fc2_1"
   op: "Relu"
   input: "svhn/add_1"
   attr {
@@ -8464,7 +8395,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.0399999991059
+        float_val: 0.00520833348855
       }
     }
   }
@@ -8511,13 +8442,13 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495058088
+      i: 1495091461
     }
   }
   attr {
     key: "seed2"
     value {
-      i: 251
+      i: 249
     }
   }
 }
@@ -8775,7 +8706,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.00400000018999
+        float_val: 0.0
       }
     }
   }
@@ -8796,75 +8727,6 @@ node {
     value {
       list {
         shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "svhn/softmax_fc/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\377\377\377\377\300\000\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn/softmax_fc/Reshape"
-  op: "Reshape"
-  input: "svhn/Relu_1"
-  input: "svhn/softmax_fc/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 128
-          }
-          dim {
-            size: 192
-          }
         }
       }
     }
@@ -8909,7 +8771,7 @@ node {
             size: 10
           }
         }
-        float_val: 0.10000000149
+        float_val: 0.0
       }
     }
   }
@@ -9044,7 +8906,7 @@ node {
 node {
   name: "svhn/MatMul_2"
   op: "MatMul"
-  input: "svhn/softmax_fc/Reshape"
+  input: "svhn/fc2_1"
   input: "svhn/softmax_fc/w/read"
   attr {
     key: "T"
@@ -9306,7 +9168,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.00999999977648
+        float_val: 0.10000000149
       }
     }
   }
@@ -14632,7 +14494,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/MatMul_2_grad/MatMul_1"
   op: "MatMul"
-  input: "svhn/softmax_fc/Reshape"
+  input: "svhn/fc2_1"
   input: "svhn/optimize/gradients/svhn/softmax_fc_1_grad/tuple/control_dependency"
   attr {
     key: "T"
@@ -14746,57 +14608,14 @@ node {
   }
 }
 node {
-  name: "svhn/optimize/gradients/svhn/softmax_fc/Reshape_grad/Shape"
-  op: "Const"
-  input: "^svhn/optimize/avg"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\200\000\000\000\300\000\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn/optimize/gradients/svhn/softmax_fc/Reshape_grad/Reshape"
-  op: "Reshape"
+  name: "svhn/optimize/gradients/svhn/fc2_1_grad/ReluGrad"
+  op: "ReluGrad"
   input: "svhn/optimize/gradients/svhn/MatMul_2_grad/tuple/control_dependency"
-  input: "svhn/optimize/gradients/svhn/softmax_fc/Reshape_grad/Shape"
+  input: "svhn/fc2_1"
   attr {
     key: "T"
     value {
       type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
     }
   }
   attr {
@@ -14850,33 +14669,6 @@ node {
           }
           dim {
             size: 10
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "svhn/optimize/gradients/svhn/Relu_1_grad/ReluGrad"
-  op: "ReluGrad"
-  input: "svhn/optimize/gradients/svhn/softmax_fc/Reshape_grad/Reshape"
-  input: "svhn/Relu_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 128
-          }
-          dim {
-            size: 192
           }
         }
       }
@@ -14989,7 +14781,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/add_1_grad/Sum"
   op: "Sum"
-  input: "svhn/optimize/gradients/svhn/Relu_1_grad/ReluGrad"
+  input: "svhn/optimize/gradients/svhn/fc2_1_grad/ReluGrad"
   input: "svhn/optimize/gradients/svhn/add_1_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -15056,7 +14848,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/add_1_grad/Sum_1"
   op: "Sum"
-  input: "svhn/optimize/gradients/svhn/Relu_1_grad/ReluGrad"
+  input: "svhn/optimize/gradients/svhn/fc2_1_grad/ReluGrad"
   input: "svhn/optimize/gradients/svhn/add_1_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -15233,7 +15025,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/MatMul_1_grad/MatMul_1"
   op: "MatMul"
-  input: "svhn/fc2/Reshape"
+  input: "svhn/fc1_1"
   input: "svhn/optimize/gradients/svhn/add_1_grad/tuple/control_dependency"
   attr {
     key: "T"
@@ -15347,57 +15139,14 @@ node {
   }
 }
 node {
-  name: "svhn/optimize/gradients/svhn/fc2/Reshape_grad/Shape"
-  op: "Const"
-  input: "^svhn/optimize/avg"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\200\000\000\000\200\001\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn/optimize/gradients/svhn/fc2/Reshape_grad/Reshape"
-  op: "Reshape"
+  name: "svhn/optimize/gradients/svhn/fc1_1_grad/ReluGrad"
+  op: "ReluGrad"
   input: "svhn/optimize/gradients/svhn/MatMul_1_grad/tuple/control_dependency"
-  input: "svhn/optimize/gradients/svhn/fc2/Reshape_grad/Shape"
+  input: "svhn/fc1_1"
   attr {
     key: "T"
     value {
       type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
     }
   }
   attr {
@@ -15451,33 +15200,6 @@ node {
           }
           dim {
             size: 192
-          }
-        }
-      }
-    }
-  }
-}
-node {
-  name: "svhn/optimize/gradients/svhn/Relu_grad/ReluGrad"
-  op: "ReluGrad"
-  input: "svhn/optimize/gradients/svhn/fc2/Reshape_grad/Reshape"
-  input: "svhn/Relu"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 128
-          }
-          dim {
-            size: 384
           }
         }
       }
@@ -15590,7 +15312,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/add_grad/Sum"
   op: "Sum"
-  input: "svhn/optimize/gradients/svhn/Relu_grad/ReluGrad"
+  input: "svhn/optimize/gradients/svhn/fc1_1_grad/ReluGrad"
   input: "svhn/optimize/gradients/svhn/add_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -15657,7 +15379,7 @@ node {
 node {
   name: "svhn/optimize/gradients/svhn/add_grad/Sum_1"
   op: "Sum"
-  input: "svhn/optimize/gradients/svhn/Relu_grad/ReluGrad"
+  input: "svhn/optimize/gradients/svhn/fc1_1_grad/ReluGrad"
   input: "svhn/optimize/gradients/svhn/add_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -18430,6 +18152,75 @@ node {
   }
 }
 node {
+  name: "svhn_1/fc1/Reshape/shape"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        tensor_content: "\350\003\000\000\377\377\377\377"
+      }
+    }
+  }
+}
+node {
+  name: "svhn_1/fc1/Reshape"
+  op: "Reshape"
+  input: "svhn_1/pool2"
+  input: "svhn_1/fc1/Reshape/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1000
+          }
+          dim {
+            size: 4096
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "svhn_1/fc1/L2Loss"
   op: "L2Loss"
   input: "svhn/fc1/w/read"
@@ -18495,75 +18286,6 @@ node {
     value {
       list {
         shape {
-        }
-      }
-    }
-  }
-}
-node {
-  name: "svhn_1/fc1/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\350\003\000\000\377\377\377\377"
-      }
-    }
-  }
-}
-node {
-  name: "svhn_1/fc1/Reshape"
-  op: "Reshape"
-  input: "svhn_1/pool2"
-  input: "svhn_1/fc1/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1000
-          }
-          dim {
-            size: 4096
-          }
         }
       }
     }
@@ -18636,7 +18358,7 @@ node {
   }
 }
 node {
-  name: "svhn_1/Relu"
+  name: "svhn_1/fc1_1"
   op: "Relu"
   input: "svhn_1/add"
   attr {
@@ -18733,78 +18455,9 @@ node {
   }
 }
 node {
-  name: "svhn_1/fc2/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\377\377\377\377\200\001\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn_1/fc2/Reshape"
-  op: "Reshape"
-  input: "svhn_1/Relu"
-  input: "svhn_1/fc2/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1000
-          }
-          dim {
-            size: 384
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "svhn_1/MatMul_1"
   op: "MatMul"
-  input: "svhn_1/fc2/Reshape"
+  input: "svhn_1/fc1_1"
   input: "svhn/fc2/w/read"
   attr {
     key: "T"
@@ -18868,7 +18521,7 @@ node {
   }
 }
 node {
-  name: "svhn_1/Relu_1"
+  name: "svhn_1/fc2_1"
   op: "Relu"
   input: "svhn_1/add_1"
   attr {
@@ -18938,7 +18591,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.00400000018999
+        float_val: 0.0
       }
     }
   }
@@ -18965,78 +18618,9 @@ node {
   }
 }
 node {
-  name: "svhn_1/softmax_fc/Reshape/shape"
-  op: "Const"
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 2
-          }
-        }
-      }
-    }
-  }
-  attr {
-    key: "dtype"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_INT32
-        tensor_shape {
-          dim {
-            size: 2
-          }
-        }
-        tensor_content: "\377\377\377\377\300\000\000\000"
-      }
-    }
-  }
-}
-node {
-  name: "svhn_1/softmax_fc/Reshape"
-  op: "Reshape"
-  input: "svhn_1/Relu_1"
-  input: "svhn_1/softmax_fc/Reshape/shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "_output_shapes"
-    value {
-      list {
-        shape {
-          dim {
-            size: 1000
-          }
-          dim {
-            size: 192
-          }
-        }
-      }
-    }
-  }
-}
-node {
   name: "svhn_1/MatMul_2"
   op: "MatMul"
-  input: "svhn_1/softmax_fc/Reshape"
+  input: "svhn_1/fc2_1"
   input: "svhn/softmax_fc/w/read"
   attr {
     key: "T"
@@ -23759,7 +23343,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_7b50cc4cca52408492f5f93279513499/part"
+        string_val: "_temp_4a6e941065ff4927a03f3890e965dadd/part"
       }
     }
   }

@@ -17,7 +17,10 @@ import tensorflow as tf
 BATCH_SIZE = 100
 NUM_SUBPLOT_COLS = 10
 DATASET_PATH = "../data/train_32x32.mat"
+VALID_DATASET_PATH = "../data/test_32x32.mat"
 GEN_TEST_PATH = "../data/test_images.mat"
+CROP_H = 24
+CROP_W = 24
 
 NUM_CLASSES = 10
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 73257
@@ -88,6 +91,7 @@ class DataLoader:
 
   def preprocess(self):
     image, label = self.example_queue.dequeue()
+    # distorted_image = tf.random_crop(image, [CROP_H, CROP_w, 3])
     if self.num_valid_samples == None:
       distorted_image = tf.image.random_flip_left_right(image)
       distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
@@ -135,28 +139,24 @@ class DataLoader:
     print("dataloader closed successfully.")
 
 if __name__ == "__main__":
-  '''
   fig = plt.figure()
   num_plot_cols = NUM_SUBPLOT_COLS
   num_plot_rows = int(math.ceil(BATCH_SIZE/num_plot_cols))
   labels = []
-  ''' 
 
   with tf.Graph().as_default():
-    dataloader = DataLoader(DATASET_PATH, BATCH_SIZE)
+    dataloader = DataLoader(VALID_DATASET_PATH, BATCH_SIZE)
     image_batch, label_batch = dataloader.load_batch()
     run_options = tf.RunOptions(timeout_in_ms=4000000)
     with tf.Session() as session:
       dataloader.load(session)
-      for epoch in range(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN // BATCH_SIZE):
+      for epoch in range(NUM_EXAMPLES_PER_EPOCH_FOR_EVAL // BATCH_SIZE):
         images, labels = session.run([image_batch, label_batch], options=run_options)
         # print(images.shape, labels.shape)
         # print(labels)
-        ''' 
         for batch_i in range(BATCH_SIZE):
           sub_plot = fig.add_subplot(num_plot_rows, num_plot_cols, batch_i+1)
           plt.imshow(images[batch_i])
-        '''
       dataloader.close(session)
-  # plt.show()
+  plt.show()
 

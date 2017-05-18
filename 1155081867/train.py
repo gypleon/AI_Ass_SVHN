@@ -23,7 +23,7 @@ tf.app.flags.DEFINE_string ("train_set_path", "../data/train_32x32.mat", "path o
 tf.app.flags.DEFINE_string ("valid_set_path", "../data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "./trained_model", "path of checkpoints/logs")
 tf.app.flags.DEFINE_integer("max_steps", 1000000, "max number of steps (batchs)")
-tf.app.flags.DEFINE_float  ("learning_rate", 0.01, "initial learning rate")
+tf.app.flags.DEFINE_float  ("learning_rate", 0.1, "initial learning rate")
 tf.app.flags.DEFINE_boolean('log_device_placement', False, "Whether to log device placement.")
 tf.app.flags.DEFINE_integer('num_valid_examples', 1000, "")
 
@@ -38,15 +38,16 @@ def main(_):
 
   with tf.Graph().as_default():
     train_loader = DataLoader(FLAGS.train_set_path, FLAGS.batch_size)
-    valid_loader = DataLoader(FLAGS.valid_set_path, num_valid_samples=1000)
+    valid_loader = DataLoader(FLAGS.valid_set_path, num_valid_samples=FLAGS.num_valid_examples)
     train_images, train_labels = train_loader.load_batch()
     valid_images, valid_labels = valid_loader.load_batch()
 
     tf.set_random_seed(seed)
-    initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
+    # initializer = tf.contrib.layers.xavier_initializer_conv2d(seed=seed)
     global_step = tf.contrib.framework.get_or_create_global_step()
 
-    with tf.variable_scope("svhn", initializer=initializer):
+    # with tf.variable_scope("svhn", initializer=initializer):
+    with tf.variable_scope("svhn"):
       logits = model.inference(train_images)
       # logits = tf.Print(logits, [logits], message="TEST logits:", summarize=FLAGS.batch_size)
       # train_labels = tf.Print(train_labels, [train_labels], message="TEST labels:", summarize=FLAGS.batch_size)
