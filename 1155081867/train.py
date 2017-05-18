@@ -18,7 +18,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer("batch_size", 128, "batch size")
 tf.app.flags.DEFINE_integer("valid_batch_size", 1000, "validation batch size")
 tf.app.flags.DEFINE_integer("log_frequency", 10, "log frequency")
-tf.app.flags.DEFINE_integer("eval_frequency", 100, "log frequency")
+tf.app.flags.DEFINE_integer("eval_frequency", 200, "evaluation frequency")
 tf.app.flags.DEFINE_string ("train_set_path", "../data/train_32x32.mat", "path of the train set")
 tf.app.flags.DEFINE_string ("valid_set_path", "../data/test_32x32.mat", "path of the test set")
 tf.app.flags.DEFINE_string ("log_dir", "./trained_model", "path of checkpoints/logs")
