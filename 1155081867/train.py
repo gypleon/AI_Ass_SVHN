@@ -66,7 +66,6 @@ def main(_):
       """Logs loss and runtime."""
       def after_create_session(self, session, coord):
         train_loader.load(session)
-        valid_loader.load(session)
         print("TEST after_create_session")
 
       def begin(self):
@@ -77,7 +76,6 @@ def main(_):
       def end(self, session):
         print("TEST end")
         train_loader.close(session)
-        valid_loader.close(session)
 
       def before_run(self, run_context):
         # print("TEST before_run")
