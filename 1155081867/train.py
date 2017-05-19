@@ -55,7 +55,9 @@ def main(_):
       top_k_op = tf.nn.in_top_k(logits, valid_labels, 1)
     
     scaffold = tf.train.Scaffold(init_op=tf.global_variables_initializer())
-    saver = tf.train.Saver(tf.trainable_variables())
+    variable_averages = tf.train.ExponentialMovingAverage(model.MOVING_AVERAGE_DECAY)
+    variables_to_restore = variable_averages.variables_to_restore()
+    saver = tf.train.Saver(variables_to_restore)
 
     class _LoggerHook(tf.train.SessionRunHook):
       """Logs loss and runtime."""

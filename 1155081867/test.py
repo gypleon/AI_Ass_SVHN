@@ -37,7 +37,9 @@ def main(_):
       logits = model.inference(test_images)
       predictions = model.prediction(logits)
     
-    saver = tf.train.Saver()
+    variable_averages = tf.train.ExponentialMovingAverage(model.MOVING_AVERAGE_DECAY)
+    variables_to_restore = variable_averages.variables_to_restore()
+    saver = tf.train.Saver(variables_to_restore)
 
     options = tf.RunOptions(timeout_in_ms=10000)
     with tf.Session() as session:

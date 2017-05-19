@@ -115,7 +115,11 @@ def optimize(loss, global_step, init_learning_rate=0.1, batch_size=128, max_grad
     with tf.control_dependencies([loss_averages_op]):
       optimizer = tf.train.GradientDescentOptimizer(learning_rate)
       grads = optimizer.compute_gradients(loss)
-    train_op = optimizer.apply_gradients(grads, global_step=global_step)
+    apply_gradient_op = optimizer.apply_gradients(grads, global_step=global_step)
+    variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
+    variables_averages_op = variable_averages.apply(tf.trainable_variables())
+    with tf.control_dependencies([apply_gradient_op, variables_averages_op]):
+      train_op = tf.no_op(name='train')
   return train_op
 
 def evaluate(session, top_k_op, num_examples):
