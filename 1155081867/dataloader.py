@@ -169,7 +169,7 @@ class DataLoader:
         image_batch = tf.train.batch(
           [image],
           batch_size=self.batch_size,
-          num_threads=4,
+          num_threads=1,
           capacity=int(self.num_valid_samples * 0.4) + 3 * self.batch_size)
     print("loading batch of samples:", self.batch_size) 
     if not self.is_test:

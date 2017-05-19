@@ -41,7 +41,7 @@ def main(_):
     variables_to_restore = variable_averages.variables_to_restore()
     saver = tf.train.Saver(variables_to_restore)
 
-    options = tf.RunOptions(timeout_in_ms=10000)
+    options = tf.RunOptions(timeout_in_ms=300000)
     with tf.Session() as session:
       session.run(tf.global_variables_initializer())
       test_loader.load(session)
