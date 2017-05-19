@@ -388,7 +388,7 @@ node {
   }
 }
 node {
-  name: "Cast"
+  name: "Cast_1"
   op: "Cast"
   input: "fifo_queue_Dequeue"
   attr {
@@ -941,7 +941,7 @@ node {
 node {
   name: "random_crop"
   op: "Slice"
-  input: "Cast"
+  input: "Cast_1"
   input: "random_crop/mod"
   input: "random_crop/size"
   attr {
@@ -3458,7 +3458,7 @@ node {
   }
 }
 node {
-  name: "Cast_4"
+  name: "Cast_5"
   op: "Cast"
   input: "fifo_queue_1_Dequeue"
   attr {
@@ -3495,7 +3495,7 @@ node {
 node {
   name: "control_dependency"
   op: "Identity"
-  input: "Cast_4"
+  input: "Cast_5"
   attr {
     key: "T"
     value {
@@ -3506,7 +3506,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@Cast_4"
+        s: "loc:@Cast_5"
       }
     }
   }
@@ -3543,7 +3543,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@Cast_4"
+        s: "loc:@Cast_5"
       }
     }
   }
@@ -5408,7 +5408,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495128194
+      i: 1495168211
     }
   }
   attr {
@@ -6328,7 +6328,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495128194
+      i: 1495168211
     }
   }
   attr {
@@ -7311,7 +7311,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495128194
+      i: 1495168211
     }
   }
   attr {
@@ -8026,7 +8026,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495128194
+      i: 1495168211
     }
   }
   attr {
@@ -8741,7 +8741,7 @@ node {
   attr {
     key: "seed"
     value {
-      i: 1495128194
+      i: 1495168211
     }
   }
   attr {
@@ -17828,6 +17828,3722 @@ node {
   }
 }
 node {
+  name: "svhn/optimize/Identity"
+  op: "Identity"
+  input: "svhn/conv1/w"
+  input: "^svhn/conv1/w/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 5
+        }
+        dim {
+          size: 5
+        }
+        dim {
+          size: 3
+        }
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_1"
+  op: "Identity"
+  input: "svhn/conv1/b"
+  input: "^svhn/conv1/b/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_2"
+  op: "Identity"
+  input: "svhn/conv2/w"
+  input: "^svhn/conv2/w/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 5
+        }
+        dim {
+          size: 5
+        }
+        dim {
+          size: 64
+        }
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_3"
+  op: "Identity"
+  input: "svhn/conv2/b"
+  input: "^svhn/conv2/b/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 64
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_3"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_4"
+  op: "Identity"
+  input: "svhn/fc1/w"
+  input: "^svhn/fc1/w/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2304
+        }
+        dim {
+          size: 384
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_5"
+  op: "Identity"
+  input: "svhn/fc1/b"
+  input: "^svhn/fc1/b/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 384
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_5"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_6"
+  op: "Identity"
+  input: "svhn/fc2/w"
+  input: "^svhn/fc2/w/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 384
+        }
+        dim {
+          size: 192
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_6"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_7"
+  op: "Identity"
+  input: "svhn/fc2/b"
+  input: "^svhn/fc2/b/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 192
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_7"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_8"
+  op: "Identity"
+  input: "svhn/softmax_fc/w"
+  input: "^svhn/softmax_fc/w/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 192
+        }
+        dim {
+          size: 10
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_8"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/Identity_9"
+  op: "Identity"
+  input: "svhn/softmax_fc/b"
+  input: "^svhn/softmax_fc/b/Assign"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 10
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage/Assign"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "svhn/optimize/Identity_9"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage/read"
+  op: "Identity"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/decay"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.999899983406
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/num_updates"
+  op: "Cast"
+  input: "global_step/read"
+  attr {
+    key: "DstT"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "SrcT"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/add/x"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/add"
+  op: "Add"
+  input: "svhn/optimize/ExponentialMovingAverage/add/x"
+  input: "svhn/optimize/ExponentialMovingAverage/num_updates"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/add_1/x"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 10.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/add_1"
+  op: "Add"
+  input: "svhn/optimize/ExponentialMovingAverage/add_1/x"
+  input: "svhn/optimize/ExponentialMovingAverage/num_updates"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/truediv"
+  op: "RealDiv"
+  input: "svhn/optimize/ExponentialMovingAverage/add"
+  input: "svhn/optimize/ExponentialMovingAverage/add_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  op: "Minimum"
+  input: "svhn/optimize/ExponentialMovingAverage/decay"
+  input: "svhn/optimize/ExponentialMovingAverage/truediv"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage/read"
+  input: "svhn/conv1/w/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage/read"
+  input: "svhn/conv1/b/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage/read"
+  input: "svhn/conv2/w/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage/read"
+  input: "svhn/conv2/b/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage/read"
+  input: "svhn/fc1/w/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage/read"
+  input: "svhn/fc1/b/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage/read"
+  input: "svhn/fc2/w/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage/read"
+  input: "svhn/fc2/b/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage/read"
+  input: "svhn/softmax_fc/w/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub"
+  op: "Sub"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub/x"
+  input: "svhn/optimize/ExponentialMovingAverage/Minimum"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub_1"
+  op: "Sub"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage/read"
+  input: "svhn/softmax_fc/b/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/mul"
+  op: "Mul"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub_1"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9"
+  op: "AssignSub"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "svhn/optimize/ExponentialMovingAverage"
+  op: "NoOp"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_1"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_2"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_3"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_4"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_5"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_6"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_7"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_8"
+  input: "^svhn/optimize/ExponentialMovingAverage/AssignMovingAvg_9"
+}
+node {
+  name: "svhn/optimize/train"
+  op: "NoOp"
+  input: "^svhn/optimize/GradientDescent"
+  input: "^svhn/optimize/ExponentialMovingAverage"
+}
+node {
   name: "svhn_1/conv1/L2Loss"
   op: "L2Loss"
   input: "svhn/conv1/w/read"
@@ -19062,6 +22778,16 @@ node {
   input: "^svhn/optimize/svhn/softmax_fc/weight_loss/avg/Assign"
   input: "^svhn/optimize/svhn/loss/cross_entropy_mean/avg/Assign"
   input: "^svhn/optimize/svhn/loss/total_loss/avg/Assign"
+  input: "^svhn/optimize/svhn/conv1/w/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/conv1/b/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/conv2/w/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/conv2/b/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/fc1/w/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/fc1/b/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/fc2/w/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/fc2/b/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage/Assign"
+  input: "^svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage/Assign"
 }
 node {
   name: "save/Const"
@@ -19102,7 +22828,7 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 28
           }
         }
       }
@@ -19121,19 +22847,37 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 10
+            size: 28
           }
         }
-        string_val: "svhn/conv1/b"
-        string_val: "svhn/conv1/w"
-        string_val: "svhn/conv2/b"
-        string_val: "svhn/conv2/w"
-        string_val: "svhn/fc1/b"
-        string_val: "svhn/fc1/w"
-        string_val: "svhn/fc2/b"
-        string_val: "svhn/fc2/w"
-        string_val: "svhn/softmax_fc/b"
-        string_val: "svhn/softmax_fc/w"
+        string_val: "global_step"
+        string_val: "svhn/conv1/b/ExponentialMovingAverage"
+        string_val: "svhn/conv1/w/ExponentialMovingAverage"
+        string_val: "svhn/conv2/b/ExponentialMovingAverage"
+        string_val: "svhn/conv2/w/ExponentialMovingAverage"
+        string_val: "svhn/fc1/b/ExponentialMovingAverage"
+        string_val: "svhn/fc1/w/ExponentialMovingAverage"
+        string_val: "svhn/fc2/b/ExponentialMovingAverage"
+        string_val: "svhn/fc2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+        string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+        string_val: "svhn/softmax_fc/b/ExponentialMovingAverage"
+        string_val: "svhn/softmax_fc/w/ExponentialMovingAverage"
       }
     }
   }
@@ -19147,7 +22891,7 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 28
           }
         }
       }
@@ -19166,9 +22910,27 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 10
+            size: 28
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -19189,6 +22951,7 @@ node {
   input: "save/Const"
   input: "save/SaveV2/tensor_names"
   input: "save/SaveV2/shape_and_slices"
+  input: "global_step"
   input: "svhn/conv1/b"
   input: "svhn/conv1/w"
   input: "svhn/conv2/b"
@@ -19197,12 +22960,47 @@ node {
   input: "svhn/fc1/w"
   input: "svhn/fc2/b"
   input: "svhn/fc2/w"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv1/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv2/weight_loss/avg"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc1/weight_loss/avg"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc2/weight_loss/avg"
+  input: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+  input: "svhn/optimize/svhn/loss/total_loss/avg"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
   input: "svhn/softmax_fc/b"
   input: "svhn/softmax_fc/w"
   attr {
     key: "dtypes"
     value {
       list {
+        type: DT_INT64
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -19277,7 +23075,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/conv1/b"
+        string_val: "global_step"
       }
     }
   }
@@ -19338,7 +23136,7 @@ node {
     key: "dtypes"
     value {
       list {
-        type: DT_FLOAT
+        type: DT_INT64
       }
     }
   }
@@ -19346,19 +23144,19 @@ node {
 node {
   name: "save/Assign"
   op: "Assign"
-  input: "svhn/conv1/b"
+  input: "global_step"
   input: "save/RestoreV2"
   attr {
     key: "T"
     value {
-      type: DT_FLOAT
+      type: DT_INT64
     }
   }
   attr {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/conv1/b"
+        s: "loc:@global_step"
       }
     }
   }
@@ -19367,9 +23165,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 64
-          }
         }
       }
     }
@@ -19418,7 +23213,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/conv1/w"
+        string_val: "svhn/conv1/b/ExponentialMovingAverage"
       }
     }
   }
@@ -19487,7 +23282,7 @@ node {
 node {
   name: "save/Assign_1"
   op: "Assign"
-  input: "svhn/conv1/w"
+  input: "svhn/conv1/b"
   input: "save/RestoreV2_1"
   attr {
     key: "T"
@@ -19499,7 +23294,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/conv1/w"
+        s: "loc:@svhn/conv1/b"
       }
     }
   }
@@ -19508,15 +23303,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 3
-          }
           dim {
             size: 64
           }
@@ -19568,7 +23354,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/conv2/b"
+        string_val: "svhn/conv1/w/ExponentialMovingAverage"
       }
     }
   }
@@ -19637,7 +23423,7 @@ node {
 node {
   name: "save/Assign_2"
   op: "Assign"
-  input: "svhn/conv2/b"
+  input: "svhn/conv1/w"
   input: "save/RestoreV2_2"
   attr {
     key: "T"
@@ -19649,7 +23435,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/conv2/b"
+        s: "loc:@svhn/conv1/w"
       }
     }
   }
@@ -19658,6 +23444,15 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
           dim {
             size: 64
           }
@@ -19709,7 +23504,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/conv2/w"
+        string_val: "svhn/conv2/b/ExponentialMovingAverage"
       }
     }
   }
@@ -19778,7 +23573,7 @@ node {
 node {
   name: "save/Assign_3"
   op: "Assign"
-  input: "svhn/conv2/w"
+  input: "svhn/conv2/b"
   input: "save/RestoreV2_3"
   attr {
     key: "T"
@@ -19790,7 +23585,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/conv2/w"
+        s: "loc:@svhn/conv2/b"
       }
     }
   }
@@ -19799,15 +23594,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 5
-          }
-          dim {
-            size: 5
-          }
-          dim {
-            size: 64
-          }
           dim {
             size: 64
           }
@@ -19859,7 +23645,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/fc1/b"
+        string_val: "svhn/conv2/w/ExponentialMovingAverage"
       }
     }
   }
@@ -19928,7 +23714,7 @@ node {
 node {
   name: "save/Assign_4"
   op: "Assign"
-  input: "svhn/fc1/b"
+  input: "svhn/conv2/w"
   input: "save/RestoreV2_4"
   attr {
     key: "T"
@@ -19940,7 +23726,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/fc1/b"
+        s: "loc:@svhn/conv2/w"
       }
     }
   }
@@ -19950,7 +23736,16 @@ node {
       list {
         shape {
           dim {
-            size: 384
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
           }
         }
       }
@@ -20000,7 +23795,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/fc1/w"
+        string_val: "svhn/fc1/b/ExponentialMovingAverage"
       }
     }
   }
@@ -20069,7 +23864,7 @@ node {
 node {
   name: "save/Assign_5"
   op: "Assign"
-  input: "svhn/fc1/w"
+  input: "svhn/fc1/b"
   input: "save/RestoreV2_5"
   attr {
     key: "T"
@@ -20081,7 +23876,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/fc1/w"
+        s: "loc:@svhn/fc1/b"
       }
     }
   }
@@ -20090,9 +23885,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 2304
-          }
           dim {
             size: 384
           }
@@ -20144,7 +23936,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/fc2/b"
+        string_val: "svhn/fc1/w/ExponentialMovingAverage"
       }
     }
   }
@@ -20213,7 +24005,7 @@ node {
 node {
   name: "save/Assign_6"
   op: "Assign"
-  input: "svhn/fc2/b"
+  input: "svhn/fc1/w"
   input: "save/RestoreV2_6"
   attr {
     key: "T"
@@ -20225,7 +24017,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/fc2/b"
+        s: "loc:@svhn/fc1/w"
       }
     }
   }
@@ -20235,7 +24027,10 @@ node {
       list {
         shape {
           dim {
-            size: 192
+            size: 2304
+          }
+          dim {
+            size: 384
           }
         }
       }
@@ -20285,7 +24080,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/fc2/w"
+        string_val: "svhn/fc2/b/ExponentialMovingAverage"
       }
     }
   }
@@ -20354,7 +24149,7 @@ node {
 node {
   name: "save/Assign_7"
   op: "Assign"
-  input: "svhn/fc2/w"
+  input: "svhn/fc2/b"
   input: "save/RestoreV2_7"
   attr {
     key: "T"
@@ -20366,7 +24161,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/fc2/w"
+        s: "loc:@svhn/fc2/b"
       }
     }
   }
@@ -20375,9 +24170,6 @@ node {
     value {
       list {
         shape {
-          dim {
-            size: 384
-          }
           dim {
             size: 192
           }
@@ -20429,7 +24221,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/softmax_fc/b"
+        string_val: "svhn/fc2/w/ExponentialMovingAverage"
       }
     }
   }
@@ -20498,7 +24290,7 @@ node {
 node {
   name: "save/Assign_8"
   op: "Assign"
-  input: "svhn/softmax_fc/b"
+  input: "svhn/fc2/w"
   input: "save/RestoreV2_8"
   attr {
     key: "T"
@@ -20510,7 +24302,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/softmax_fc/b"
+        s: "loc:@svhn/fc2/w"
       }
     }
   }
@@ -20520,7 +24312,10 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 384
+          }
+          dim {
+            size: 192
           }
         }
       }
@@ -20570,7 +24365,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/softmax_fc/w"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
       }
     }
   }
@@ -20639,8 +24434,2552 @@ node {
 node {
   name: "save/Assign_9"
   op: "Assign"
-  input: "svhn/softmax_fc/w"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
   input: "save/RestoreV2_9"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_10/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_10/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_10"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_10/tensor_names"
+  input: "save/RestoreV2_10/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_10"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  input: "save/RestoreV2_10"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_11/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/conv1/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_11/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_11"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_11/tensor_names"
+  input: "save/RestoreV2_11/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_11"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv1/weight_loss/avg"
+  input: "save/RestoreV2_11"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/conv1/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_12/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_12/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_12"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_12/tensor_names"
+  input: "save/RestoreV2_12/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_12"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  input: "save/RestoreV2_12"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_13/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_13/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_13"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_13/tensor_names"
+  input: "save/RestoreV2_13/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_13"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  input: "save/RestoreV2_13"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_14/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/conv2/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_14/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_14"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_14/tensor_names"
+  input: "save/RestoreV2_14/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_14"
+  op: "Assign"
+  input: "svhn/optimize/svhn/conv2/weight_loss/avg"
+  input: "save/RestoreV2_14"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/conv2/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_15/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_15/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_15"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_15/tensor_names"
+  input: "save/RestoreV2_15/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_15"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  input: "save/RestoreV2_15"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_16"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_16/tensor_names"
+  input: "save/RestoreV2_16/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_16"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  input: "save/RestoreV2_16"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2304
+          }
+          dim {
+            size: 384
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc1/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_17"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_17/tensor_names"
+  input: "save/RestoreV2_17/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_17"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc1/weight_loss/avg"
+  input: "save/RestoreV2_17"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/fc1/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_18"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_18/tensor_names"
+  input: "save/RestoreV2_18/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_18"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "save/RestoreV2_18"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_19"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_19/tensor_names"
+  input: "save/RestoreV2_19/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_19"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  input: "save/RestoreV2_19"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_20/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_20/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_20"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_20/tensor_names"
+  input: "save/RestoreV2_20/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_20"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/weight_loss/avg"
+  input: "save/RestoreV2_20"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/fc2/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_21/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_21/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_21"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_21/tensor_names"
+  input: "save/RestoreV2_21/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_21"
+  op: "Assign"
+  input: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+  input: "save/RestoreV2_21"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_22/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_22/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_22"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_22/tensor_names"
+  input: "save/RestoreV2_22/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_22"
+  op: "Assign"
+  input: "svhn/optimize/svhn/loss/total_loss/avg"
+  input: "save/RestoreV2_22"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/loss/total_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_23/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_23/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_23"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_23/tensor_names"
+  input: "save/RestoreV2_23/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_23"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "save/RestoreV2_23"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_24/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_24/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_24"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_24/tensor_names"
+  input: "save/RestoreV2_24/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_24"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  input: "save/RestoreV2_24"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_25/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_25/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_25"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_25/tensor_names"
+  input: "save/RestoreV2_25/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_25"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+  input: "save/RestoreV2_25"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_26/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/softmax_fc/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_26/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_26"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_26/tensor_names"
+  input: "save/RestoreV2_26/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_26"
+  op: "Assign"
+  input: "svhn/softmax_fc/b"
+  input: "save/RestoreV2_26"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_27/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/softmax_fc/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_27/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2_27"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2_27/tensor_names"
+  input: "save/RestoreV2_27/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign_27"
+  op: "Assign"
+  input: "svhn/softmax_fc/w"
+  input: "save/RestoreV2_27"
   attr {
     key: "T"
     value {
@@ -20696,6 +27035,24 @@ node {
   input: "^save/Assign_7"
   input: "^save/Assign_8"
   input: "^save/Assign_9"
+  input: "^save/Assign_10"
+  input: "^save/Assign_11"
+  input: "^save/Assign_12"
+  input: "^save/Assign_13"
+  input: "^save/Assign_14"
+  input: "^save/Assign_15"
+  input: "^save/Assign_16"
+  input: "^save/Assign_17"
+  input: "^save/Assign_18"
+  input: "^save/Assign_19"
+  input: "^save/Assign_20"
+  input: "^save/Assign_21"
+  input: "^save/Assign_22"
+  input: "^save/Assign_23"
+  input: "^save/Assign_24"
+  input: "^save/Assign_25"
+  input: "^save/Assign_26"
+  input: "^save/Assign_27"
 }
 node {
   name: "report_uninitialized_variables/IsVariableInitialized"
@@ -21202,6 +27559,286 @@ node {
   }
 }
 node {
+  name: "report_uninitialized_variables/IsVariableInitialized_18"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_19"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_20"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_21"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_22"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_23"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_24"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_25"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_26"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_27"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
   name: "report_uninitialized_variables/stack"
   op: "Pack"
   input: "report_uninitialized_variables/IsVariableInitialized"
@@ -21222,10 +27859,20 @@ node {
   input: "report_uninitialized_variables/IsVariableInitialized_15"
   input: "report_uninitialized_variables/IsVariableInitialized_16"
   input: "report_uninitialized_variables/IsVariableInitialized_17"
+  input: "report_uninitialized_variables/IsVariableInitialized_18"
+  input: "report_uninitialized_variables/IsVariableInitialized_19"
+  input: "report_uninitialized_variables/IsVariableInitialized_20"
+  input: "report_uninitialized_variables/IsVariableInitialized_21"
+  input: "report_uninitialized_variables/IsVariableInitialized_22"
+  input: "report_uninitialized_variables/IsVariableInitialized_23"
+  input: "report_uninitialized_variables/IsVariableInitialized_24"
+  input: "report_uninitialized_variables/IsVariableInitialized_25"
+  input: "report_uninitialized_variables/IsVariableInitialized_26"
+  input: "report_uninitialized_variables/IsVariableInitialized_27"
   attr {
     key: "N"
     value {
-      i: 18
+      i: 28
     }
   }
   attr {
@@ -21240,7 +27887,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -21263,7 +27910,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -21279,7 +27926,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -21298,7 +27945,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 18
+            size: 28
           }
         }
         string_val: "global_step"
@@ -21319,6 +27966,16 @@ node {
         string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
         string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
         string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
       }
     }
   }
@@ -21354,7 +28011,7 @@ node {
             size: 1
           }
         }
-        int_val: 18
+        int_val: 28
       }
     }
   }
@@ -21629,7 +28286,7 @@ node {
             size: 1
           }
         }
-        int_val: 18
+        int_val: 28
       }
     }
   }
@@ -21928,7 +28585,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -21994,7 +28651,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -22693,6 +29350,286 @@ node {
   }
 }
 node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_18"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_19"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_20"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_21"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/conv2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_22"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_23"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc1/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_24"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_25"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_26"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_27"
+  op: "IsVariableInitialized"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
   name: "report_uninitialized_variables_1/stack"
   op: "Pack"
   input: "report_uninitialized_variables_1/IsVariableInitialized"
@@ -22713,10 +29650,20 @@ node {
   input: "report_uninitialized_variables_1/IsVariableInitialized_15"
   input: "report_uninitialized_variables_1/IsVariableInitialized_16"
   input: "report_uninitialized_variables_1/IsVariableInitialized_17"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_18"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_19"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_20"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_21"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_22"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_23"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_24"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_25"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_26"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_27"
   attr {
     key: "N"
     value {
-      i: 18
+      i: 28
     }
   }
   attr {
@@ -22731,7 +29678,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -22754,7 +29701,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -22770,7 +29717,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -22789,7 +29736,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 18
+            size: 28
           }
         }
         string_val: "global_step"
@@ -22810,6 +29757,16 @@ node {
         string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
         string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
         string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
       }
     }
   }
@@ -22845,7 +29802,7 @@ node {
             size: 1
           }
         }
-        int_val: 18
+        int_val: 28
       }
     }
   }
@@ -23120,7 +30077,7 @@ node {
             size: 1
           }
         }
-        int_val: 18
+        int_val: 28
       }
     }
   }
@@ -23419,7 +30376,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -23485,7 +30442,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -23669,7 +30626,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_44af11c9dd244d18bc0ea28ba6d4ebbe/part"
+        string_val: "_temp_64f47ac0d5cf4af999abfa80ecf41cde/part"
       }
     }
   }
@@ -23786,7 +30743,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -23805,7 +30762,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 18
+            size: 28
           }
         }
         string_val: "global_step"
@@ -23817,12 +30774,22 @@ node {
         string_val: "svhn/fc1/w"
         string_val: "svhn/fc2/b"
         string_val: "svhn/fc2/w"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
         string_val: "svhn/optimize/svhn/conv1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
         string_val: "svhn/optimize/svhn/conv2/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
         string_val: "svhn/optimize/svhn/fc1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
         string_val: "svhn/optimize/svhn/fc2/weight_loss/avg"
         string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
         string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
         string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
         string_val: "svhn/softmax_fc/b"
         string_val: "svhn/softmax_fc/w"
@@ -23839,7 +30806,7 @@ node {
       list {
         shape {
           dim {
-            size: 18
+            size: 28
           }
         }
       }
@@ -23858,9 +30825,19 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 18
+            size: 28
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -23898,12 +30875,22 @@ node {
   input: "svhn/fc1/w"
   input: "svhn/fc2/b"
   input: "svhn/fc2/w"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
   input: "svhn/optimize/svhn/conv1/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
   input: "svhn/optimize/svhn/conv2/weight_loss/avg"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
   input: "svhn/optimize/svhn/fc1/weight_loss/avg"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
   input: "svhn/optimize/svhn/fc2/weight_loss/avg"
   input: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
   input: "svhn/optimize/svhn/loss/total_loss/avg"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
   input: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
   input: "svhn/softmax_fc/b"
   input: "svhn/softmax_fc/w"
@@ -23912,6 +30899,16 @@ node {
     value {
       list {
         type: DT_INT64
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -25353,7 +32350,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/conv1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
       }
     }
   }
@@ -25422,7 +32419,7 @@ node {
 node {
   name: "save_1/Assign_9"
   op: "Assign"
-  input: "svhn/optimize/svhn/conv1/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv1/b/ExponentialMovingAverage"
   input: "save_1/RestoreV2_9"
   attr {
     key: "T"
@@ -25434,7 +32431,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/conv1/weight_loss/avg"
+        s: "loc:@svhn/conv1/b"
       }
     }
   }
@@ -25443,6 +32440,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -25491,7 +32491,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/conv2/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
       }
     }
   }
@@ -25560,7 +32560,7 @@ node {
 node {
   name: "save_1/Assign_10"
   op: "Assign"
-  input: "svhn/optimize/svhn/conv2/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv1/w/ExponentialMovingAverage"
   input: "save_1/RestoreV2_10"
   attr {
     key: "T"
@@ -25572,7 +32572,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/conv2/weight_loss/avg"
+        s: "loc:@svhn/conv1/w"
       }
     }
   }
@@ -25581,6 +32581,18 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -25629,7 +32641,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/fc1/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv1/weight_loss/avg"
       }
     }
   }
@@ -25698,7 +32710,7 @@ node {
 node {
   name: "save_1/Assign_11"
   op: "Assign"
-  input: "svhn/optimize/svhn/fc1/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv1/weight_loss/avg"
   input: "save_1/RestoreV2_11"
   attr {
     key: "T"
@@ -25710,7 +32722,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/fc1/weight_loss/avg"
+        s: "loc:@svhn/optimize/svhn/conv1/weight_loss/avg"
       }
     }
   }
@@ -25767,7 +32779,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/fc2/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
       }
     }
   }
@@ -25836,7 +32848,7 @@ node {
 node {
   name: "save_1/Assign_12"
   op: "Assign"
-  input: "svhn/optimize/svhn/fc2/weight_loss/avg"
+  input: "svhn/optimize/svhn/conv2/b/ExponentialMovingAverage"
   input: "save_1/RestoreV2_12"
   attr {
     key: "T"
@@ -25848,7 +32860,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/fc2/weight_loss/avg"
+        s: "loc:@svhn/conv2/b"
       }
     }
   }
@@ -25857,6 +32869,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -25905,7 +32920,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+        string_val: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
       }
     }
   }
@@ -25974,7 +32989,7 @@ node {
 node {
   name: "save_1/Assign_13"
   op: "Assign"
-  input: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+  input: "svhn/optimize/svhn/conv2/w/ExponentialMovingAverage"
   input: "save_1/RestoreV2_13"
   attr {
     key: "T"
@@ -25986,7 +33001,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+        s: "loc:@svhn/conv2/w"
       }
     }
   }
@@ -25995,6 +33010,18 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 5
+          }
+          dim {
+            size: 5
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
         }
       }
     }
@@ -26043,7 +33070,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+        string_val: "svhn/optimize/svhn/conv2/weight_loss/avg"
       }
     }
   }
@@ -26112,7 +33139,7 @@ node {
 node {
   name: "save_1/Assign_14"
   op: "Assign"
-  input: "svhn/optimize/svhn/loss/total_loss/avg"
+  input: "svhn/optimize/svhn/conv2/weight_loss/avg"
   input: "save_1/RestoreV2_14"
   attr {
     key: "T"
@@ -26124,7 +33151,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/loss/total_loss/avg"
+        s: "loc:@svhn/optimize/svhn/conv2/weight_loss/avg"
       }
     }
   }
@@ -26181,7 +33208,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+        string_val: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
       }
     }
   }
@@ -26250,7 +33277,7 @@ node {
 node {
   name: "save_1/Assign_15"
   op: "Assign"
-  input: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+  input: "svhn/optimize/svhn/fc1/b/ExponentialMovingAverage"
   input: "save_1/RestoreV2_15"
   attr {
     key: "T"
@@ -26262,7 +33289,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+        s: "loc:@svhn/fc1/b"
       }
     }
   }
@@ -26271,6 +33298,9 @@ node {
     value {
       list {
         shape {
+          dim {
+            size: 384
+          }
         }
       }
     }
@@ -26319,7 +33349,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/softmax_fc/b"
+        string_val: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
       }
     }
   }
@@ -26388,7 +33418,7 @@ node {
 node {
   name: "save_1/Assign_16"
   op: "Assign"
-  input: "svhn/softmax_fc/b"
+  input: "svhn/optimize/svhn/fc1/w/ExponentialMovingAverage"
   input: "save_1/RestoreV2_16"
   attr {
     key: "T"
@@ -26400,7 +33430,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@svhn/softmax_fc/b"
+        s: "loc:@svhn/fc1/w"
       }
     }
   }
@@ -26410,7 +33440,10 @@ node {
       list {
         shape {
           dim {
-            size: 10
+            size: 2304
+          }
+          dim {
+            size: 384
           }
         }
       }
@@ -26460,7 +33493,7 @@ node {
             size: 1
           }
         }
-        string_val: "svhn/softmax_fc/w"
+        string_val: "svhn/optimize/svhn/fc1/weight_loss/avg"
       }
     }
   }
@@ -26529,8 +33562,1409 @@ node {
 node {
   name: "save_1/Assign_17"
   op: "Assign"
-  input: "svhn/softmax_fc/w"
+  input: "svhn/optimize/svhn/fc1/weight_loss/avg"
   input: "save_1/RestoreV2_17"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/fc1/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_18/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_18/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_18"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_18/tensor_names"
+  input: "save_1/RestoreV2_18/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_18"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/b/ExponentialMovingAverage"
+  input: "save_1/RestoreV2_18"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_19/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_19/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_19"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_19/tensor_names"
+  input: "save_1/RestoreV2_19/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_19"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/w/ExponentialMovingAverage"
+  input: "save_1/RestoreV2_19"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/fc2/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 384
+          }
+          dim {
+            size: 192
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_20/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/fc2/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_20/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_20"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_20/tensor_names"
+  input: "save_1/RestoreV2_20/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_20"
+  op: "Assign"
+  input: "svhn/optimize/svhn/fc2/weight_loss/avg"
+  input: "save_1/RestoreV2_20"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/fc2/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_21/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_21/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_21"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_21/tensor_names"
+  input: "save_1/RestoreV2_21/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_21"
+  op: "Assign"
+  input: "svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+  input: "save_1/RestoreV2_21"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/loss/cross_entropy_mean/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_22/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/loss/total_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_22/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_22"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_22/tensor_names"
+  input: "save_1/RestoreV2_22/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_22"
+  op: "Assign"
+  input: "svhn/optimize/svhn/loss/total_loss/avg"
+  input: "save_1/RestoreV2_22"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/loss/total_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_23/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_23/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_23"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_23/tensor_names"
+  input: "save_1/RestoreV2_23/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_23"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/b/ExponentialMovingAverage"
+  input: "save_1/RestoreV2_23"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_24/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_24/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_24"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_24/tensor_names"
+  input: "save_1/RestoreV2_24/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_24"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/w/ExponentialMovingAverage"
+  input: "save_1/RestoreV2_24"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/w"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 192
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_25/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_25/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_25"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_25/tensor_names"
+  input: "save_1/RestoreV2_25/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_25"
+  op: "Assign"
+  input: "svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+  input: "save_1/RestoreV2_25"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/optimize/svhn/softmax_fc/weight_loss/avg"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_26/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/softmax_fc/b"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_26/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_26"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_26/tensor_names"
+  input: "save_1/RestoreV2_26/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_26"
+  op: "Assign"
+  input: "svhn/softmax_fc/b"
+  input: "save_1/RestoreV2_26"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@svhn/softmax_fc/b"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_27/tensor_names"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "svhn/softmax_fc/w"
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_27/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save_1/RestoreV2_27"
+  op: "RestoreV2"
+  input: "save_1/Const"
+  input: "save_1/RestoreV2_27/tensor_names"
+  input: "save_1/RestoreV2_27/shape_and_slices"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_FLOAT
+      }
+    }
+  }
+}
+node {
+  name: "save_1/Assign_27"
+  op: "Assign"
+  input: "svhn/softmax_fc/w"
+  input: "save_1/RestoreV2_27"
   attr {
     key: "T"
     value {
@@ -26594,6 +35028,16 @@ node {
   input: "^save_1/Assign_15"
   input: "^save_1/Assign_16"
   input: "^save_1/Assign_17"
+  input: "^save_1/Assign_18"
+  input: "^save_1/Assign_19"
+  input: "^save_1/Assign_20"
+  input: "^save_1/Assign_21"
+  input: "^save_1/Assign_22"
+  input: "^save_1/Assign_23"
+  input: "^save_1/Assign_24"
+  input: "^save_1/Assign_25"
+  input: "^save_1/Assign_26"
+  input: "^save_1/Assign_27"
 }
 node {
   name: "save_1/restore_all"
