@@ -5,7 +5,7 @@ The solution to the assignment of Artificial Intelligence course.
 We adopted the Format 2 of [The Street View House Numbers (SVHN) Dataset](http://ufldl.stanford.edu/housenumbers/).
 
 # Requirements
-Ubuntu 14.04.5 LTS
+Ubuntu 14.04.5 LTS<\br>
 python 2.7.6
 tensorflow 1.0.1
 
