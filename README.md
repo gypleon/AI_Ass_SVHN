@@ -60,6 +60,6 @@ trained model is saved in "./trained_model".
 
 "test_images.mat" <- randomly generated from "test_32x32.mat".
 
-all the two files are supposed be supplied by you.
+all the two files are supposed to be provided by yourself.
 # Precision
 test precision is supposed to be over 90%.
